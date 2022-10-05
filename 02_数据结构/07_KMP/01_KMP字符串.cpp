@@ -30,7 +30,7 @@
 #include<iostream>
 using namespace std;
 
-const int N = 10010, M = 100010;
+const int N = 100010, M = 1000010;
 char p[N], s[M]; // p是短的字符串，s是长的字符串
 int ne[N]; // 保存前缀和后缀最长的相同字符串长度
 

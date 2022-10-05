@@ -112,3 +112,87 @@ int main(){
   for(int i = r[0]; i != 1; i = r[i]) cout << e[i] << " ";
   return 0;
 }
+
+// #include<iostream>
+// using namespace std;
+
+// const int N = 100010;
+// int l[N], r[N], e[N], idx;
+
+// void init(){
+//     r[0] = 1, l[0] = 1;
+//     l[1] = 0, r[1] = 0;
+//     idx = 2;
+// }
+
+
+// 方法二：全部插入都用一个函数
+// void headInsert(int x){
+//     e[idx] = x;
+//     l[idx] = 0, r[idx] = r[0];
+//     l[r[0]] = idx, r[0] = idx;
+//     idx++;
+// }
+// void tailInsert(int x){
+//     e[idx] = x;
+//     l[idx] = l[1], r[idx] = 1;
+//     r[l[1]] = idx, l[1] = idx;
+//     idx++;
+// }
+// void leftInsert(int k, int x){
+//     e[idx] = x;
+//     l[idx] = l[k], r[idx] = k;
+//     r[l[k]] = idx, l[k] = idx;
+//     idx++;
+// }
+// void rightInsert(int k, int x){
+//     e[idx] = x;
+//     l[idx] = k, r[idx] = r[k];
+//     l[r[k]] = idx, r[k] = idx;
+//     idx++;
+// }
+
+// void addk(int k, int x){
+//     e[idx] = x;
+//     l[idx] = k, r[idx] = r[k];
+//     l[r[k]] = idx, r[k] = idx;
+//     idx++;
+// }
+// void remove(int k){
+//     r[l[k]] = r[k];
+//     l[r[k]] = l[k];
+// }
+
+// int main(){
+//     int m;
+//     cin >> m;
+//     init();
+//     while(m--){
+//         int k, x;
+//         string option;
+//         cin >> option;
+//         if(option == "L"){
+//             cin >> x;
+//             // headInsert(x);
+//             addk(0, x);
+//         }else if(option == "R"){
+//             cin >> x;
+//             // tailInsert(x);
+//             addk(l[1], x);
+//         }else if(option == "D"){
+//             cin >> k;
+//             remove(k + 1);
+//         }else if(option == "IL"){
+//             cin >> k >> x;
+//             // leftInsert(k + 1, x);
+//             addk(l[k + 1], x);
+//         }else if(option == "IR"){
+//             cin >> k >> x;
+//             // rightInsert(k + 1, x);
+//             // leftInsert(r[k + 1], x);
+//             addk(k + 1, x);
+//         }
+//     }
+//     for(int i = r[0]; i != 1; i = r[i]) cout << e[i] << " ";
+//     return 0;
+// }

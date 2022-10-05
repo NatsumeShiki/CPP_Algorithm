@@ -25,3 +25,35 @@
 // 1 2 3 4 5
 // 输出样例：
 // Yes
+
+// 思路：用两个指针分别指向a和b，如果a[i] == b[j]，两个指针都往后，否则，j往后，直到 i < n && j < m 这个条件不成立为止
+//      然后判断i是否等于n，如果等于说明匹配成功，否则匹配失败
+#include<iostream>
+using namespace std;
+
+const int N = 100010;
+int a[N], b[N];
+
+int main(){
+int n, m;
+cin >> n >> m;
+for(int i = 0; i < n; i++) cin >> a[i];
+for(int i = 0; i < m; i++) cin >> b[i];
+
+int i = 0, j = 0;
+while(i < n && j < m){
+  if(a[i] == b[j]){
+      i++;
+      j++;
+  }else{
+      j++;
+  }
+}
+if(i == n){
+  cout << "Yes";
+}else{
+  cout << "No";
+}
+
+return 0;
+}
