@@ -33,24 +33,24 @@ using namespace std;
 typedef pair<int, int> PII;
 const int N = 101;
 int n, m;
-int g[N][N], d[N][N];
-PII q[N * N];
+int g[N][N], d[N][N]; // g数组记录迷宫，d数组记录走到那里要多少步
+PII q[N * N]; // 队列
 
 
 int bfs(){
   int hh = 0, tt = 0;
-  q[0] = {0, 0};
+  q[0] = {0, 0}; // 把{0， 0}保存到队列的第一个
 
-  memset(d, -1, sizeof d);
-  d[0][0] = 0;
+  memset(d, -1, sizeof d); // 将d数组中所有元素重置为-1，表明还没有到这里
+  d[0][0] = 0; // 起点到起点距离是0
 
-  int dx[4] = { -1, 0, 1, 0 }, dy[4] = { 0, -1, 0, 1 };
+  int dx[4] = { -1, 0, 1, 0 }, dy[4] = { 0, -1, 0, 1 }; // 用这个来模拟上下左右
   
   while(hh <= tt){
-    auto t = q[hh++];
+    auto t = q[hh++]; 
     for(int i = 0; i < 4; i++){
       int x = t.first + dx[i], y = t.second + dy[i];
-      if(x >= 0 && x < n && y >= 0 && y < m && g[x][y] == 0 && d[x][y] == -1){
+      if(x >= 0 && x < n && y >= 0 && y < m && g[x][y] == 0 && d[x][y] == -1){ // 如果这里满足条件，就说明可以走这里，并且入队列
         d[x][y] = d[t.first][t.second] + 1;
         q[++tt] = { x, y };
       }

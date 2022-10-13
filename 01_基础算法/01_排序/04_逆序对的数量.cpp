@@ -34,7 +34,7 @@ LL merge_reverse(int l, int r){
   int mid = l + r >> 1;
   LL res = merge_reverse(l, mid) + merge_reverse(mid + 1, r);
 
-  int i = l, j = mid + 1, k = 1;
+  int i = l, j = mid + 1, k = 0;
   while(i <= mid && j <= r){
     if(q[i] <= q[j]){
       temp[k++] = q[i++];
