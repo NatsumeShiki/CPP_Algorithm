@@ -54,7 +54,7 @@ int dijkstra(){
     dist[1] = 0;
     
     priority_queue<PII, vector<PII>, greater<PII>> heap; // 这个PII中第一个表示dist，第二个表示下标
-    heap.push({0, 1}); // 优先队里按照dist升序排列，所有top是dist最小的那个数
+    heap.push({0, 1}); // 优先队里按照dist升序排列，所以top是dist最小的那个数
     while(heap.size()){
         auto t = heap.top();
         heap.pop();
