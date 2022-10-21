@@ -29,7 +29,7 @@ using namespace std;
 
 void divide(int n){
     for(int i = 2; i <= n / i; i++){
-        if(n % i == 0){ // 这个i一定是质数
+        if(n % i == 0){ // 如果成立，则这个i一定是质数
             int s = 0;
             while(n % i == 0){
                 n /= i;
