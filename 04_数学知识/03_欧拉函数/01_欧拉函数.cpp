@@ -41,10 +41,10 @@ int main(){
         for(int i = 2; i <= x / i; i++){
             if(x % i == 0){
                 while(x % i == 0) x /= i;
-                res = res / i * (i - 1);
+                res = res / i * (i - 1); // 也可以写成 res = res - res * i
             }
         }
-        if(x > 1) res = res / x * (x - 1);
+        if(x > 1) res = res / x * (x - 1); // 也可以写成 res = res - res * x
         cout << res << endl;
     }
     
