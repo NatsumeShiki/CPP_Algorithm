@@ -29,6 +29,7 @@
 // 2
 // impossible
 
+// 逆元的含义：如果a可以整除b，那么一定存在一个x，使得 a/b 等用于 a*x (mod m)，充分必要条件是 b和m互质
 // 这道题本质上就是让求一个数x，使得 a * x 等同于 1 (mod p)
 // 使用费马定理 a ^ (p - 1) 等同于 1 (mod p)
 // 所以可以得到 a * a ^ (p - 2) 等同于 1 (mod p)
@@ -55,7 +56,7 @@ int main(){
     while(n--){
         int a, p;
         cin >> a >> p;
-        if(a % p == 0) cout << "impossible" << endl; // 当a%p等于0的时候，没有a乘以任何数模p都是0
+        if(a % p == 0) cout << "impossible" << endl; // 当a%p等于0的时候，a乘以任何数模p都是0
         else cout << qmi(a, p-2, p) << endl;
     }
     return 0;
