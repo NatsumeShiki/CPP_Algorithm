@@ -23,6 +23,7 @@
 // 3
 // 2
 
+// 卢卡斯定理 C(a, b) = C(a % p, b % p) * lucas(a / p, b / p)，如果a和b都小于p，就按照定义来做
 #include<iostream>
 #include<algorithm>
 using namespace std;
