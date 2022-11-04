@@ -26,7 +26,7 @@
 // 10
 
 /*
-这时多重背包问题的暴力做法，跟完全背包问题的朴素做法是一样的，从0-s[i]枚举第i个物品选择次数，因为n、v、s都是小等于100的，100^3=1e6，肯定是可以通过的 
+这是多重背包问题的暴力做法，跟完全背包问题的朴素做法是一样的，从0-s[i]枚举第i个物品选择次数，因为n、v、s都是小等于100的，100^3=1e6，肯定是可以通过的 
 */
 #include<iostream>
 using namespace std;
@@ -40,10 +40,8 @@ int main(){
     for(int i = 1; i <= n; i++) cin >> v[i] >> w[i] >> s[i];
     for(int i = 1; i <= n; i++)
         for(int j = 0;  j <= m; j++)
-            for(int k = 0; k <= s[i] && k * v[i] <= j; k++){
+            for(int k = 0; k <= s[i] && k * v[i] <= j; k++)
                 f[i][j] = max(f[i][j], f[i - 1][j - v[i] * k] + k * w[i]);
-            }
     cout << f[n][m] << endl;
-    
     return 0;
 }
