@@ -32,46 +32,46 @@
   此时时间复杂度是 O(nlog(n^2))，勉强能过
   但是还可以再优化，跟完全背包问题类似
   f[i][j] = f[i-1][j] + f[i-1][j-i] + f[i-1][j-2i] + ... + f[i-1][j-si]
-  f[i][j-i] =           f[i-1][j]   + f[i-1][j-2i] + ... + f[i-1][j-si]
+  f[i][j-i] =           f[i-1][j-i] + f[i-1][j-2i] + ... + f[i-1][j-si]
   所以 f[i][j] = f[i-1][j] + f[i][j-i]
 */
-#include<iostream>
-using namespace std;
+// #include<iostream>
+// using namespace std;
 
-const int N = 1010, mod = 1e9 + 7;
-int f[N][N];
+// const int N = 1010, mod = 1e9 + 7;
+// int f[N][N];
 
-int main(){
-    int n;
-    cin >> n;
-    for(int i = 0; i <= n; i++) f[i][0] = 1; // 表示从1-i件物品选择体积为0的方法有1种，那就是什么都不选
-    for(int i = 1; i <= n; i++)
-        for(int j = 0; j <= n; j++){
-            f[i][j] = f[i - 1][j] % mod; // 如果j是小于i的，就不需要加上f[i][j-i]，直接等于f[i-1][j]即可
-            if(j >= i) f[i][j] = (f[i - 1][j] + f[i][j - i]) % mod; // 如果j是大于等于i的，就使用公式
-        }
-    cout << f[n][n] << endl; // 表示从1-n物品中选择体积为n的方法数
+// int main(){
+//     int n;
+//     cin >> n;
+//     for(int i = 0; i <= n; i++) f[i][0] = 1; // 表示从1-i件物品选择体积为0的方法有1种，那就是什么都不选
+//     for(int i = 1; i <= n; i++)
+//         for(int j = 0; j <= n; j++){
+//             f[i][j] = f[i - 1][j] % mod; // 如果j是小于i的，就不需要加上f[i][j-i]，直接等于f[i-1][j]即可
+//             if(j >= i) f[i][j] = (f[i - 1][j] + f[i][j - i]) % mod; // 如果j是大于等于i的，就使用公式
+//         }
+//     cout << f[n][n] << endl; // 表示从1-n物品中选择体积为n的方法数
     
-    return 0;
-}
+//     return 0;
+// }
 
 // 一维数组
-#include<iostream>
-using namespace std;
+// #include<iostream>
+// using namespace std;
 
-const int N = 1010, mod = 1e9 + 7;
-int n, f[N];
+// const int N = 1010, mod = 1e9 + 7;
+// int n, f[N];
 
-int main(){
-    cin >> n;
-    f[0] = 1;
-    for(int i = 1; i <= n; i++)
-        for(int j = i; j <= n; j++)
-            f[j] = (f[j] + f[j - i]) % mod;
-    cout << f[n] << endl;
+// int main(){
+//     cin >> n;
+//     f[0] = 1;
+//     for(int i = 1; i <= n; i++)
+//         for(int j = i; j <= n; j++)
+//             f[j] = (f[j] + f[j - i]) % mod;
+//     cout << f[n] << endl;
     
-    return 0;
-}
+//     return 0;
+// }
 
 /*
 方法二：
