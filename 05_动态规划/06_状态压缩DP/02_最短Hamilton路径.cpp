@@ -63,3 +63,39 @@ int main(){
     
     return 0;
 }
+
+// 简化版
+#include<iostream>
+#include<cmath>
+using namespace std;
+
+int dgt(int x){ // 计算整数n有多少位
+    int res = 0;
+    while(x) res++, x /= 10;
+    return res;
+}
+
+int count(int n, int x){ // 计算从1到n的整数中数字i出现多少次 
+    int res = 0, d = dgt(n);
+    for(int i = 1; i <= d; i++){ // 从右到左第i位上数字x出现多少次
+        int p = pow(10, i - 1), r = n % p, l = n / p / 10, dj = n / p % 10; // l和r是第j位左边和右边的整数 (视频中的abc和efg); dj是第j位的数字
+        if (x) res += l * p;  // 计算第j位左边的整数小于l (视频中xxx = 000 ~ abc - 1)的情况
+        if (!x && l) res += (l - 1) * p;  // 如果x = 0, 左边高位不能全为0(视频中xxx = 001 ~ abc - 1)
+        
+        if ( (dj > x) && (x || l) ) res += p;
+        if ( (dj == x) && (x || l) ) res += r + 1;
+    }
+    return res;
+}
+
+int main(){
+    int a, b;
+    while(cin >> a >> b, a || b){
+        if(a > b) swap(a, b);
+        for(int i = 0; i < 10; i++)
+            cout << count(b, i) - count(a - 1, i) << " ";
+        cout << endl;
+    }
+    
+    return 0;
+}
