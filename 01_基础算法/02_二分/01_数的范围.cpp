@@ -31,6 +31,8 @@
 // 5 5
 // -1 -1
 
+// 求满足条件里面的最大值 区间[l, r]被划分成[l, mid - 1]和[mid, r] l= mid
+// 求满足条件的最小值 区间[l, r]被划分成[l, mid]和[mid + 1, r] r = mid
 #include<iostream>
 using namespace std;
 

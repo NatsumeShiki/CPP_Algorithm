@@ -17,6 +17,16 @@
 // 输出样例：
 // 1 1 2 1 2
 
+// lowbit(x):返回x的最后一位1
+// 比如说 x = 1010，lowbit(1010) = 10; x = 1001000, lowbit(x) = 1000
+// 可以用公式：x & -x
+// -x是x的按位取反然后加上1，所以 -x = ~x + 1
+// 比如说 x = 1001000
+// ~x = 01101111
+// ~x + 1 = 0111000
+// x & -x = 0001000
+// 利用这个性质可以计算一个数的二进制中有多少个1
+
 #include<iostream>
 using namespace std;
 
@@ -40,4 +50,30 @@ int main(){
   }
 
   return 0;
+}
+
+// 方法二：
+#include<iostream>
+using namespace std;
+
+const int N = 1e5 + 10;
+
+int count(int x){
+    int res = 0;
+    for(int i = 0; i < 31; i++)
+        if(x >> i & 1)
+            res++;
+    return res;
+}
+
+int main(){
+    int n;
+    cin >> n;
+    while(n--){
+        int x;
+        cin >> x;
+        cout << count(x) << " ";
+    }
+    
+    return 0;
 }

@@ -48,26 +48,26 @@ int a[N], s[N];
 vector<int> alls;
 vector<PII> add, query;
 
-// int find(int x){
-//   int l = 0, r = alls.size() - 1;
-//   while(l < r){
-//     int mid = l + r >> 1;
-//     if(alls[mid] >= x) r = mid;
-//     else l = mid + 1;
-//   }
-//   return r + 1;
-// }
 int find(int x){
-  return lower_bound(alls.begin(), alls.end(), x) - alls.begin() + 1;
-}
-
-vector<int>::iterator unique(vector<int> &a){
-  int j = 0;
-  for(int i = 0; i < a.size(); i++){
-      if(!i || a[i] != a[i - 1]) a[j++] = a[i];
+  int l = 0, r = alls.size() - 1;
+  while(l < r){
+    int mid = l + r >> 1;
+    if(alls[mid] >= x) r = mid;
+    else l = mid + 1;
   }
-  return a.begin() + j;
+  return r + 1;
 }
+// int find(int x){
+//   return lower_bound(alls.begin(), alls.end(), x) - alls.begin() + 1;
+// }
+
+// vector<int>::iterator unique(vector<int> &a){
+//   int j = 0;
+//   for(int i = 0; i < a.size(); i++){
+//       if(!i || a[i] != a[i - 1]) a[j++] = a[i];
+//   }
+//   return a.begin() + j;
+// }
 
 int main(){
   cin >> n >> m;
@@ -90,8 +90,8 @@ int main(){
 
   // 去重
   sort(alls.begin(), alls.end());
-  // alls.erase(unique(alls.begin(), alls.end()), alls.end());
-  alls.erase(unique(alls), alls.end()); // 如果没有unique函数，可以自己写
+  alls.erase(unique(alls.begin(), alls.end()), alls.end());
+  // alls.erase(unique(alls), alls.end()); // 如果没有unique函数，可以自己写
 
   // 处理插入
   for(auto item : add){
