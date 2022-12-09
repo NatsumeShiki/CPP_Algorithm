@@ -77,13 +77,13 @@ int main(){
 #include<cstring>
 using namespace std;
 
-const int N = 20;
+const int N = 10;
 int n;
 bool st[N], backup[N];
 int ans;
 
 bool check(int a, int c){
-    int b = n * c - a * c; // 获取b
+    long long b = n * (long long)c - a * c; // 获取b，这里的c最多可能会有七位，再乘以n后可能会爆int，所以用longlong
     
     if(!a || !b || !c) return false; // 如果a或b或c是等于0的，直接返回
     
