@@ -42,3 +42,86 @@
 // 1 6 4
 // 输出样例3：
 // 3
+
+// 方法一
+// 这是利用倒推的方式，如果h[i+1]>e，则e=e-(h[i+1]-e)=2e-h[i+1]，如果h[i+1]<=e，则e=e+(e-h[i-1])=2e-h[i-1]，都是一样的，所以从后往前递推，要获取临界值
+// 则必然如果最终的能量为0是临界的，设置为x，那么就从后往前执行e=h[i]+x+1 >> 1，加1是为了向上取整
+#include<iostream>
+using namespace std;
+
+const int N = 1e5 + 10;
+int h[N];
+
+int main(){
+    int n;
+    cin >> n;
+    for(int i = 1; i <= n; i++) cin >> h[i];
+    int x = 0;
+    for(int i = n; i > 0; i--){
+        x = x + h[i] + 1 >> 1;
+    }
+    cout << x << endl;
+    return 0;
+}
+
+// 方法二 
+// 利用二分，从0-1e5二分，获取中间值，如果中间值满足题目所给的性质，就让r=mid，否则让l=mid+1
+#include<iostream>
+using namespace std;
+
+const int N = 1e5 + 10;
+int h[N];
+
+int main(){
+    int n;
+    cin >> n;
+    for(int i = 1; i <= n; i++) cin >> h[i];
+    int l = 0, r = 1e5;
+    while(l < r){
+        int mid = l + r >> 1;
+        int x = mid;
+        bool flag = true;
+        for(int i = 1; i <= n; i++){
+            x = 2 * x - h[i];
+            if(x > 1e5) break;
+            if(x < 0) {
+                flag = false;
+                break;
+            }
+        }
+        if(flag) r = mid;
+        else l = mid + 1;
+    }
+    cout << l << endl;
+    return 0;
+}
+
+// 大佬的写法
+#include<iostream>
+using namespace std;
+
+const int N = 1e5 + 10;
+int h[N];
+int n;
+
+bool check(int e){
+    for(int i = 1; i <= n; i++){
+        e = 2 * e - h[i];
+        if(e > 1e5) return true;
+        if(e < 0) return false;
+    }
+    return true;
+}
+
+int main(){
+    cin >> n;
+    for(int i = 1; i <= n; i++) cin >> h[i];
+    int l = 0, r = 1e5;
+    while(l < r){
+        int mid = l + r >> 1;
+        if(check(mid)) r = mid;
+        else l = mid + 1;
+    }
+    cout << l << endl;
+    return 0;
+}
