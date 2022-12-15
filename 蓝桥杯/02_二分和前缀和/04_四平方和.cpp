@@ -29,15 +29,16 @@
 // 0 0 1 2
 
 // 方法一：二分
+// 从下到大枚举c和d，将他们保存起来，然后从小到大枚举a和b，查看保存起来的c和d中是否存在n-a*a-b*b，如果存在，则第一个就是字典序最小的，输出即可
 #include<iostream>
 #include<cmath>
 #include<algorithm>
 using namespace std;
 
-const int N = 2500010;
-struct Sum{
+const int N = 2500010; // sqrt(n) <= n/2，所以数组只需要开一半即可
+struct Sum{ // Sum结构体是用来保存 c*c+d*d，c，d
     int s, c, d;
-    bool operator<(const Sum &t) const{
+    bool operator<(const Sum &t) const{ // 重写<用于排序
         if(s != t.s) return s < t.s;
         if(c != t.c) return c < t.c;
         return d < t.d;
@@ -49,19 +50,19 @@ int main(){
     cin >> n;
     for(int c = 0; c * c <= n; c++)
         for(int d = c; c * c + d * d <= n; d++)
-            sum[m++] = {c * c + d * d, c, d};
-    sort(sum, sum + m);
+            sum[m++] = {c * c + d * d, c, d}; // 枚举c和d，保存起来
+    sort(sum, sum + m); 
     for(int a = 0; a * a <= n; a++)
-        for(int b = a; a * a + b * b <= n; b++){
-            int t = n - a * a - b * b;
+        for(int b = a; a * a + b * b <= n; b++){ // 从小到大枚举a和b
+            int t = n - a * a - b * b; // 获取剩余的平方和
             int l = 0, r = m - 1;
-            while(l < r){
+            while(l < r){ // 二分这个结构体数组
                 int mid = l + r >> 1;
                 if(sum[mid].s >= t) r = mid;
                 else l = mid + 1;
             }
-            if(sum[l].s == t){
-                printf("%d %d %d %d\n", a, b, sum[l].c, sum[l].d);
+            if(sum[l].s == t){ // 如果存在
+                printf("%d %d %d %d\n", a, b, sum[l].c, sum[l].d); // 则它就是字典序最小的，输出即可
                 return 0;
             }
         }
@@ -69,7 +70,7 @@ int main(){
 }
 
 // 方法二：哈希表
-// 会超时
+// 会超时，思路和二分一样，只是用哈希表保存更方便，他会自动排序，并且哈希表的Count函数可以判断是否存在，更方便
 #include<iostream>
 #include<unordered_map>
 #include<algorithm>
