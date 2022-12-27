@@ -83,7 +83,7 @@ int main(){
         k -= 2;
     }
     
-    cout << res << endl;
+    cout << res << endl; 
     
     return 0;
 }
