@@ -33,7 +33,7 @@
 // #include<cstring>
 // using namespace std;
 
-// const int N = 100003;
+// const int N = ;
 // int e[N], ne[N], h[N], idx; // e数组用来保存真实的值，ne数组用来保存某一个区域中，当前值的下一个元素的下标，h数组用来保存每一条链子的第一个元素下标
 
 // void insert(int x){
