@@ -93,7 +93,7 @@ int main(){
 using namespace std;
 
 const int N = 1010;
-int a[N], f[N], g[N];
+int a[N], f[N], g[N]; // a保存导弹的高度，f保存最长不上升子序列，g保存每个系统最低高度
 int n;
 
 int main(){
@@ -109,10 +109,10 @@ int main(){
     }
     cout << res << endl;
     
-    int cnt = 0;
+    int cnt = 0; // cnt保存拦截导弹系统数目
     for(int i = 0; i < n; i++){
-        int k = 0;
-        while(k < cnt && g[k] < a[i]) k++;
+        int k = 0; 
+        while(k < cnt && g[k] < a[i]) k++; // g数组是递增的，所以找到第一个大于等于a[i]的数，保证了这个数是大于等于它的里面最小的数，把它接在后面
         g[k] = a[i];
         if(k >= cnt) cnt++;
     }
