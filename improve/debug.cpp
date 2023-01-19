@@ -1,38 +1,47 @@
-#include <iostream>
-#include <cstring>
-#include <algorithm>
-#include <vector>
-
+#include<iostream>
+#include<cstring>
+#include<queue>
 using namespace std;
-const int N = 3010;
-int a[N], b[N], g[N];
-vector<int> f[N][N];
+
+typedef long long LL;
+const int N = 2e5 + 10;
+int e[N], ne[N], h[N], idx = 1, layer[N];
+int n;
+int power[N];
+
+void add(int a, int b){
+    e[idx] = b;
+    ne[idx] = h[a];
+    layer[b] = layer[a] + 1;
+    h[a] = idx++;
+}
 
 int main(){
-    int n;
     cin >> n;
-    for(int i = 1; i <= n; i++) cin >> a[i];
-    for(int i = 1; i <= n; i++) cin >> b[i];
-    
-    for(int i = 1; i <= n; i++)
-        for(int j = 1; j <= n; j++){
-            if(f[i - 1][j].size() > f[i][j - 1].size()) f[i][j] = f[i - 1][j];
-            else f[i][j] = f[i][j - 1];
-            
-            if(a[i] == b[j] && f[i][j].size() < f[i - 1][j - 1].size() + 1) f[i][j] = f[i - 1][j - 1], f[i][j].push_back(a[i]);
-            
-        }
-
-    vector<int> res = f[n][n];
-    int ans = 0;
-    for(int i = 0; i < res.size(); i++){
-        g[i] = 1;
-        for(int j = 0; j < i; j++)
-            if(res[j] < res[i])
-                g[i] = max(g[i], g[j] + 1);
-        ans = max(ans, g[i]);
+    layer[1] = 1;
+    e[0] = 1;
+    memset(h, -1, sizeof h);
+    for(int i = 2; i <= n; i++){
+        int fa;
+        cin >> fa;
+        add(fa, i);
     }
-    cout << ans << endl;
+    for(int i = 0; i < n; i++) cin >> power[i];
+    
+    queue<int> tree;
+    tree.push(1);
+    int cnt = 0;
+    LL res = 0;
+    while(!tree.empty()){
+        int t = tree.front();
+        tree.pop();
+        res += layer[t] * power[cnt++];
+        for(int i = h[t]; i != -1; i = ne[i]){
+            int j = e[i];
+            tree.push(j);
+        }
+    }
+    cout << res << endl;
     
     return 0;
 }

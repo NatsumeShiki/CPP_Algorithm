@@ -48,7 +48,7 @@ int main(){
         for(int j = 0; j < v; j++){
             int hh = 0, tt = -1;
             for(int k = j; k <= m; k += v){
-                if(hh <= tt && q[hh] < k - s * v) hh++;
+                if(hh <= tt && q[hh] < k - s * v) hh++; // 判断队头元素是否滑出窗口，如果滑出窗口，就弹出队列
                 if(hh <= tt) f[k] = max(f[k], g[q[hh]] + (k - q[hh]) / v * w);
                 while(hh <= tt && g[q[tt]] - (q[tt] - j) / v * w <= g[k] - (k - j) / v * w) tt--;
                 q[++tt] = k;
