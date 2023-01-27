@@ -65,4 +65,75 @@
 // 输出样例：
 // 249
 
-// 自己的代码 三维，会TLE
+/*
+动态规划
+  状态表示f[i, j, k]
+    集合：所有从前i个物品中选，且氧气含量至少是j，氮气含量至少是k的所有选法
+    属性：Min
+  状态计算：
+    1.所有不包含物品i的选法 f[i - 1, j, k]
+    2.所有包含物品i的选法 f[i - 1, j - v1, k - v2] + w
+      注意：第2中方法中j可能小于v1，k可能小于v2，此时它的意义为从前i-1个物品中选，且体积1大于等于j-v1，体积2大于等于k-v2，要知道每个物品的体积都是大于0的
+            所以如果得到负数也就等价于 f[i - 1, 0, 0]，也就是说即使是小于0的也是要参与运算的，又因为每次循环使用的是第i-1层，所以要从大到下循环，最终就是
+            for(int j = n, j >= 0; j--)和for(int k = m; k >= 0; k--), f[j][k] = min(f[j][k], f[max(0, j - v1)][max(0, k - v2)])
+    要先初始化f[0, 0] = 0, f[j, k] = +INF，因为从前0个物品中选，体积1大于等于v1，体积2大于等于v2时最小是0，因为不选任何一个，而从前0个物品选，体积1
+    大于0，体积2大于0，这是不可能的，因为没有选物品，因此把它们置成无穷大
+*/
+// 自己的代码 三维
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110, M = 1010;
+int f[M][N][N];
+int n, m, k;
+
+int main(){
+    cin >> n >> m >> k;
+    memset(f, 0x3f, sizeof f);
+    f[0][0][0] = 0;
+    
+    for(int i = 1; i <= k; i++){
+        int v1, v2, w;
+        cin >> v1 >> v2 >> w;
+        for(int j = n; j >= 0; j--)
+            for(int x = m; x >= 0; x--)
+                f[i][j][x] = min(f[i - 1][j][x], f[i - 1][max(0, j - v1)][max(0, x - v2)] + w);
+    }
+    
+    cout << f[k][n][m] << endl;
+    
+    return 0;
+}
+
+// 大佬的代码 二维
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 22, M = 80;
+int n, m, k;
+int f[N][M];
+
+int main(){
+    cin >> n >> m >> k;
+    
+    memset(f, 0x3f, sizeof f);
+    f[0][0] = 0;
+    
+    while(k--){
+        int v1, v2, w;
+        cin >> v1 >> v2 >> w;
+        for(int j = n; j >= 0; j--)
+            for(int k = m; k >= 0; k--)
+                f[j][k] = min(f[j][k], f[max(0, j - v1)][max(0, k - v2)] + w);
+    }
+    
+    cout << f[n][m] << endl;
+    
+    return 0;
+}
