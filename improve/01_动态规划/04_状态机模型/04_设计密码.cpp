@@ -56,7 +56,8 @@
         集合：密码已经生成了i位，并且第i位匹配到子串中的位置为j时的方案
         属性：Count
     状态计算：
-        枚举第i+1位的字母，从'a' - 'z'
+        枚举第i+1位的字母，从'a' - 'z'，有26种状态，枚举每一种状态，如果转移后位置小于m，表示可以进行转移，这是合法的
+        最终累加f[n][0~m-1]，表示密码生成了n为，第n为匹配子串中的位置有m-1个，所有方案数累加
 */
 #include <iostream>
 #include <cstring>
@@ -66,14 +67,14 @@ using namespace std;
     
 const int N = 55, mod = 1e9 + 7;
 int n, m;
-char str[N];
+char str[N]; // 子串
 int f[N][N];
+int ne[N];
     
 int main(){
     cin >> n >> str + 1;
     m = strlen(str + 1);
     
-    int next[N] = {0};
     for(int i = 2, j = 0; i <= m; i++){ // kmp求next数组
         while(j && str[i] != str[j + 1]) j = next[j];
         if(str[i] == str[j + 1]) j++;
@@ -87,7 +88,8 @@ int main(){
                 int u = j;
                 while(u && k != str[u + 1]) u = next[u]; // 查找u可以跳到哪个位置
                 if(k == str[u + 1]) u++; // 如果与str[u + 1]匹配，u向后走一位
-                if(u < m) f[i + 1][u] = (f[i + 1][u] + f[i][j]) % mod; // 把f[i, j]位置的数量累加到f[i + 1, u]位置上，因为可以跳到这个位置
+                // 状态转移不能跳到m位置，所以如果u<m，就表示转移是合法的，把f[i, j]位置的数量累加到f[i + 1, u]位置上，因为可以跳到这个位置
+                if(u < m) f[i + 1][u] = (f[i + 1][u] + f[i][j]) % mod; 
             }
             
     int res = 0; // 最终，要把0 ~ m-1累加一遍
