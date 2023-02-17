@@ -45,50 +45,60 @@
 // NIE
 // TAK
 
-#include<iostream>
+/*
+题目要求每一个点为起点能否顺时针或逆时针走一圈，所以破环成链，开二倍的空间
+用o[i] - d[i]来表示从i到i+1位置获得或者消费的油，然后求前缀和
+先做顺时针，开一个最长为n+1长度的单调队列，从n*2往前枚举，等到i<=n位置时，用单调队列中的最小值和s[i - 1]比较，如果最小值比他大的话，说明从i点顺时针
+绕一圈到每一站都是大于等于0的，也就是说可以走完
+同理再做一遍逆时针
+用st来保存i点是否可以顺时针或逆时针走一圈，最后枚举这个数组一遍就可以得到答案
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
 using namespace std;
 
-typedef long long LL;
-const int N = 2e6 + 10;
+typedef long long ll;
+const int N = 2e6 + 10; // 开二倍空间
+ll s[N]; // 前缀和
+int o[N], d[N]; // o是保存油量，d是保存i到i+1位置的距离
+int q[N]; // 单调队列
 int n;
-int o[N], d[N];
-LL s[N];
-int q[N];
-bool ans[N];
+bool st[N]; // i点是否可以顺时针或逆时针走一圈
 
 int main(){
     cin >> n;
     for(int i = 1; i <= n; i++) cin >> o[i] >> d[i];
     
+    // 顺时针
     for(int i = 1; i <= n; i++) s[i] = s[i + n] = o[i] - d[i];
     for(int i = 1; i <= n * 2; i++) s[i] += s[i - 1];
     
     int hh = 0, tt = -1;
-    for(int i = n * 2; i; i--){
-        if(hh <= tt && q[hh] >= i + n) hh++;
-        while(hh <= tt && s[q[tt]] >= s[i]) tt--;
-        q[++tt] = i;
-        if(i <= n)
-            if(s[q[hh]] >= s[i - 1])
-                ans[i] = true;
+    for(int i = n * 2; i; i--){ // 从后往前枚举
+        if(hh <= tt && q[hh] > i + n) hh++; // 如果最小值的点大于i+n，不可以取这一点，所以hh往后走一步
+        while(hh <= tt && s[q[tt]] >= s[i]) tt--; // 找到一个点使得s[l] <= s[i] <= s[r]
+        q[++tt] = i; // 把这个点的下标插进去
+        if(i <= n && s[q[hh]] >= s[i - 1]) // 只有在i<=n时才可以判断i点能否顺时针走一圈，如果单调队列的最小值比s[i-1]大，那么从i点往后走n站都是大于等于0
+            st[i] = true; // 因此i点是可以顺时针走一圈的
     }
     
-    d[0] = d[n];
+    // 逆时针
+    d[0] = d[n]; // s[i] = o[i] - d[i - 1]，在第一站要减去d[n]，所以可以把d[0]赋值成d[n]
     for(int i = 1; i <= n; i++) s[i] = s[i + n] = o[i] - d[i - 1];
-    for(int i = 1; i <= n * 2; i++) s[i] += s[i - 1];
+    for(int i = n * 2; i; i--) s[i] += s[i + 1]; // 反向前缀和
     
     hh = 0, tt = -1;
-    for(int i = 1; i <= n * 2; i++){
-        if(hh <= tt && q[hh] < i - n) hh++;
-        if(i > n)
-            if(s[q[hh]] <= s[i])
-                ans[i - n] = true;
-        while(hh <= tt && s[q[tt]] <= s[i]) tt--;
-        q[++tt] = i;
+    for(int i = 1; i <= n * 2; i++){ // 从1开始枚举
+        if(hh <= tt && q[hh] < i - n) hh++; // 如果最小值小于i-n，不可以取这一点，所以hh向后走一步
+        while(hh <= tt && s[q[tt]] >= s[i]) tt--; // 找到一个点使得s[l] <= s[i] <= s[r]
+        q[++tt] = i; // 把这个点的下标插进去
+        if(i > n && s[q[hh]] >= s[i + 1]) // 只有在i大于n的时候才可以判断能否逆时针走一圈，如果单调队列如果单调队列的最小值比s[i+1]大，那么从i点往前走n站都是大于等于0
+            st[i - n] = true; // 于是i-n这一点是可以逆时针走一圈的
     }
     
     for(int i = 1; i <= n; i++)
-        if(ans[i]) puts("TAK");
+        if(st[i]) puts("TAK");
         else puts("NIE");
     
     return 0;

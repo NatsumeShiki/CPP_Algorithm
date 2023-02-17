@@ -94,7 +94,7 @@ int main(){
     init();
     
     int l, r;
-    while(cin >> l >> r, l && r) cout << dp(r) - dp(l - 1) << endl;
+    while(cin >> l >> r, l || r) cout << dp(r) - dp(l - 1) << endl;
     
     
     return 0;
