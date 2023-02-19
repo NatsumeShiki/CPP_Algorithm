@@ -56,3 +56,43 @@
 // 1 4
 // 输出样例：
 // 153
+
+/*
+动态规划
+  状态表示f[i]
+    集合：将前i个任务处理完的所有方案的集合
+    属性：Min
+  状态计算
+    枚举j从0到i-1，f[i] = min( f[j] + sumTi * (sumCi - sumCj) + s * (sumCn - sumCj) )，j = 0 ~ i-1
+*/
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+typedef long long LL;
+const int N = 5050;
+int n, s;
+int sumt[N], sumc[N];
+LL f[N];
+
+int main(){
+    cin >> n >> s;
+    for(int i = 1; i <= n; i++){
+        cin >> sumt[i] >> sumc[i];
+        sumt[i] += sumt[i - 1];
+        sumc[i] += sumc[i - 1];
+    }
+    
+    memset(f, 0x3f, sizeof f);
+    f[0] = 0;
+    
+    for(int i = 1; i <= n; i++)
+        for(int j = 0; j < i; j++)
+            f[i] = min(f[i], f[j] + (LL)sumt[i] * (sumc[i] - sumc[j]) + (LL)s * (sumc[n] - sumc[j]));
+    
+    cout << f[n] << endl;
+    
+    return 0;
+}
