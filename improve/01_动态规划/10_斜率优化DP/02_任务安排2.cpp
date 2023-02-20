@@ -41,11 +41,11 @@
 // 输出一个整数，表示最小总费用。
 
 // 数据范围
-// 1≤N≤5000
+// 1≤N≤3×105
 // ,
-// 0≤S≤50
+// 1≤Ti,Ci≤512
 // ,
-// 1≤Ti,Ci≤100
+// 0≤S≤512
 // 输入样例：
 // 5
 // 1
@@ -57,15 +57,6 @@
 // 输出样例：
 // 153
 
-/*
-动态规划
-  状态表示f[i]
-    集合：将前i个任务处理完的所有方案的集合
-    属性：Min
-  状态计算
-    枚举j从0到i-1，f[i] = min( f[j] + sumTi * (sumCi - sumCj) + s * (sumCn - sumCj) )，j = 0 ~ i-1
-    s * (sumCn - sumCj) 在j位置分开把它对后面的影响记录在它自己身上
-*/
 #include <iostream>
 #include <cstring>
 #include <algorithm>
@@ -73,25 +64,31 @@
 using namespace std;
 
 typedef long long LL;
-const int N = 5050;
+
+const int N = 300010;
 int n, s;
-int sumt[N], sumc[N];
+LL c[N], t[N];
 LL f[N];
+int q[N];
 
 int main(){
     cin >> n >> s;
     for(int i = 1; i <= n; i++){
-        cin >> sumt[i] >> sumc[i];
-        sumt[i] += sumt[i - 1];
-        sumc[i] += sumc[i - 1];
+        cin >> t[i] >> c[i];
+        t[i] += t[i - 1];
+        c[i] += c[i - 1];
     }
     
-    memset(f, 0x3f, sizeof f);
-    f[0] = 0;
+    int hh = 0, tt = 0;
+    q[0] = 0;
     
-    for(int i = 1; i <= n; i++)
-        for(int j = 0; j < i; j++)
-            f[i] = min(f[i], f[j] + (LL)sumt[i] * (sumc[i] - sumc[j]) + (LL)s * (sumc[n] - sumc[j]));
+    for(int i = 1; i <= n; i++){
+        while(hh < tt && (f[q[hh + 1]] - f[q[hh]]) <= (t[i] + s) * (c[q[hh + 1]] - c[q[hh]])) hh++;
+        int j = q[hh];
+        f[i] = f[j] - (t[i] + s) * c[j] + t[i] * c[i] + s * c[n];
+        while(hh < tt && (f[q[tt]] - f[q[tt - 1]]) * (c[i] - c[q[tt - 1]]) >= (f[i] - f[q[tt - 1]]) * (c[q[tt]] - c[q[tt - 1]])) tt--;
+        q[++tt] = i;
+    }
     
     cout << f[n] << endl;
     
