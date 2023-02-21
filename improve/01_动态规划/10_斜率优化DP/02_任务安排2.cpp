@@ -57,6 +57,23 @@
 // 输出样例：
 // 153
 
+/*
+只是做了数据方面的强化，目的是为了找出时间复杂度低的方法
+f[i] = min{ f[j] + sumTi * (sumCi - sumCj) + s * (sumCn - sumCj) }
+在这里面涉及到j的只有两个，分别是，f[j] 和 sumCj，把原来的式子变形一下是
+f[i] = min{ f[j] - (sumTi + s) * sumCj + sumTi * sumCi + s * sumCn }
+把f[j]想象成y，sumCj想象成x，把它变成y = kx * b的形式是
+f[j] = (sumTi + s) * sumCj + f[i] - sumTi * sumCi - s * sumCn
+有了这个式子，题目是要求f[i]的最小值，所以，要让它是最小值，只需要让斜率最小化即可
+因此可以用单调队列来维护凸包
+
+怎么在维护的凸包中找到截距最小的点？
+相当于在一个单调队列中，找到第一个大于某一个数的点
+
+斜率单调递增，新加的点的横坐标也单调递增
+    在查询的时候，可以将队头小于当前斜率的点全部删掉  (f2 - f1) / (c2 - c1) <= sumTi + s 通过它来查找队头斜率大于当前斜率的点
+    在插入的时候，将队尾所有不在凸包上的点全部删掉    (ftt - f(tt-1)) / (ctt - c(tt-1)) >= (fi - f(ff-1)) / (ci - c(tt-1)) 通过它来查找队尾不在凸包上的点
+*/
 #include <iostream>
 #include <cstring>
 #include <algorithm>
@@ -80,14 +97,15 @@ int main(){
     }
     
     int hh = 0, tt = 0;
-    q[0] = 0;
+    q[0] = 0; // 将(0, 0)点放进队列中
     
     for(int i = 1; i <= n; i++){
-        while(hh < tt && (f[q[hh + 1]] - f[q[hh]]) <= (t[i] + s) * (c[q[hh + 1]] - c[q[hh]])) hh++;
-        int j = q[hh];
-        f[i] = f[j] - (t[i] + s) * c[j] + t[i] * c[i] + s * c[n];
-        while(hh < tt && (f[q[tt]] - f[q[tt - 1]]) * (c[i] - c[q[tt - 1]]) >= (f[i] - f[q[tt - 1]]) * (c[q[tt]] - c[q[tt - 1]])) tt--;
-        q[++tt] = i;
+        while(hh < tt && (f[q[hh + 1]] - f[q[hh]]) <= (t[i] + s) * (c[q[hh + 1]] - c[q[hh]])) hh++; // 找到队头斜率大于当前斜率的点 
+        int j = q[hh]; // 保存该点
+        f[i] = f[j] - (t[i] + s) * c[j] + t[i] * c[i] + s * c[n]; // 用上面的式子直接计算f[i]的最小值
+        // 查找队尾所有不在凸包上的点，也就找斜率比该点到q[tt-1]斜率大的点，tt--来删掉他们
+        while(hh < tt && (f[q[tt]] - f[q[tt - 1]]) * (c[i] - c[q[tt - 1]]) >= (f[i] - f[q[tt - 1]]) * (c[q[tt]] - c[q[tt - 1]])) tt--; 
+        q[++tt] = i; // 把i存进队列中
     }
     
     cout << f[n] << endl;
