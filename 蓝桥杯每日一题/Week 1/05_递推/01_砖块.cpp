@@ -76,49 +76,6 @@
 #include <vector>
 
 using namespace std;
-int n;
-
-void update(char& c){
-    if(c == 'W') c == 'B';
-    else c == 'W';
-}
-
-bool check(string s, char c){
-    vector<int> res;
-    for(int i = 0; i + 1 < n; i++){
-        if(s[i] != c) {
-            update(s[i]);
-            update(s[i + 1]);
-            res.push_back(i);
-        }
-    }
-    if(s.back() != c) return false;
-    
-    cout << res.size() << endl;
-    for(int x : res) cout << x + 1 << " ";
-    if(res.size()) cout << endl;
-    
-    return true;
-}
-
-int main(){
-    int t;
-    cin >> t;
-    while(t--){
-        string s;
-        cin >> n >> s;
-        if(!check(s, 'B') && !check(s, 'W')) puts("-1");
-    }
-    
-    return 0;
-}
-
-#include <iostream>
-#include <cstring>
-#include <algorithm>
-#include <vector>
-
-using namespace std;
 
 int n;
 string str;

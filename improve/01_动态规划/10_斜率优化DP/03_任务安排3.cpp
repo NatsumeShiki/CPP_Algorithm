@@ -89,6 +89,7 @@ int main(){
             else r = mid;
         }
         int j = q[r]; // 后面的就跟上一题一样，只是，LL可能会溢出，所以使用double来存储更大的值
+        // 两个long long类型的数据相乘需要强制类型转化成__int128以避免溢出问题。
         f[i] = f[j] + t[i] * (c[i] - c[j]) + s * (c[n] - c[j]);
         while(hh < tt && (double)(f[q[tt]] - f[q[tt - 1]]) * (c[i] - c[q[tt - 1]]) >= (double)(f[i] - f[q[tt - 1]]) * (c[q[tt]] - c[q[tt - 1]])) tt--;
         q[++tt] = i;
