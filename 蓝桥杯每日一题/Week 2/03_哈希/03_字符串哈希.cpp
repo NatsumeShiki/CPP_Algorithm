@@ -69,7 +69,5 @@ int main(){
         if(get(l1, r1) == get(l2, r2)) puts("Yes");
         else puts("No");
     }
-    
-    
     return 0;
 }
