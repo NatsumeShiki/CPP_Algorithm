@@ -76,9 +76,56 @@ void floodFill(int x, int y){
 
 int main(){
     scanf("%d%d", &n, &m);
+    for(int i = 0; i < n;i ++) scanf("%s", g[i]);
+    
+    int cnt = 0;
     for(int i = 0; i < n;i ++)
-        for(int j = 0; j < m;j ++)
-            cin >> g[i][j];
+        for(int j = 0; j < m; j++)
+            if(g[i][j] == 'W' && !st[i][j]){
+                floodFill(i, j);
+                cnt++;
+            }
+            
+    printf("%d\n", cnt);
+    
+    return 0;
+}
+
+// 大佬的代码
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+#define x first
+#define y second
+typedef pair<int, int> PII;
+const int N = 1010;
+char g[N][N];
+bool st[N][N];
+PII q[N * N];
+int n, m;
+int dx[8] = {-1, 0, 1, 0, -1, 1, 1, -1}, dy[8] = {0, 1, 0, -1, 1, 1, -1, -1};
+
+void floodFill(int x, int y){
+    int hh = 0, tt = 0;
+    q[hh] = {x, y};
+    
+    while(hh <= tt){
+        PII t = q[hh++];
+        for(int i = t.x - 1; i <= t.x + 1; i++)
+            for(int j = t.y - 1; j <= t.y + 1; j++){
+                if(i == t.x && j == t.y) continue;
+                if(i < 0 || i >= n || j < 0 || j >= m) continue;
+                if(g[i][j] == '.' || st[i][j]) continue;
+                st[i][j] = true;
+                q[++tt] = {i, j};
+            }
+    }
+}
+
+int main(){
+    scanf("%d%d", &n, &m);
+    for(int i = 0; i < n;i ++) scanf("%s", g[i]);
     
     int cnt = 0;
     for(int i = 0; i < n;i ++)
