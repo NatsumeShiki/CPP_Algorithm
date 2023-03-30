@@ -87,7 +87,7 @@ const int N = 510;
 int n, m;
 char g[N][N];
 int dist[N][N];
-bool st[N][N];
+bool st[N][N]; 
 
 int bfs(){
     deque<PII> q; // 双端队列

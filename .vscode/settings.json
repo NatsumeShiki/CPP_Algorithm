@@ -103,5 +103,6 @@
         "sstream": "cpp",
         "03_堆区,cpp": "cpp"
     },
+    "C_Cpp.errorSquiggles": "disabled",
     
 }
