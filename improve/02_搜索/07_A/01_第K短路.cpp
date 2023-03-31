@@ -55,6 +55,9 @@
 #include<queue>
 #include<algorithm>
 
+
+using namespace std;
+
 #define x first
 #define y second
 
@@ -65,7 +68,7 @@ const int N = 1010, M = 200010;
 
 int n, m, S, T, K;
 int h[N], rh[N], e[M], w[M], ne[M], idx;
-int dist[N];
+int dist[N], cnt[N];
 bool st[N];
 
 void add(int h[], int a, int b, int c){
@@ -97,25 +100,28 @@ void dijkstra(){
     }
 }
 
-int astar(){
+int astar()
+{
     priority_queue<PIII, vector<PIII>, greater<PIII>> heap;
     heap.push({dist[S], {0, S}});
-    
-    int cnt = 0;
-    while(heap.size()){
+
+    while (heap.size())
+    {
         auto t = heap.top();
         heap.pop();
-        
+
         int ver = t.y.y, distance = t.y.x;
-        if(ver == T) cnt++;
-        if(cnt == K) return distance;
-        
-        for(int i = h[ver]; ~i; i = ne[i]){
+        cnt[ver] ++ ;
+        if (cnt[T] == K) return distance;
+
+        for (int i = h[ver]; ~i; i = ne[i])
+        {
             int j = e[i];
-            heap.push({distance + w[i] + dist[j], {distance + w[i], j}});
+            if (cnt[j] < K)
+                heap.push({distance + w[i] + dist[j], {distance + w[i], j}});
         }
     }
-    
+
     return -1;
 }
 
