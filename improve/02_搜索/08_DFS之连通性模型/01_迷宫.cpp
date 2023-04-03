@@ -70,17 +70,15 @@ int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, -1, 0, 1};
 
 bool dfs(int x, int y){
     if(x == ex && y == ey) return true;
-    bool flag = false;
     for(int i = 0; i < 4; i++){
         int a = x + dx[i], b = y + dy[i];
         if(a < 0 || a >= n || b < 0 || b >= n) continue;
         if(g[a][b] == '#') continue;
         if(st[a][b]) continue;
         st[a][b] = true;
-        flag |= dfs(a, b);
-        if(flag) break;
+        if(dfs(a, b)) return true;;
     }
-    return flag;
+    return false;
 }
 
 int main(){
