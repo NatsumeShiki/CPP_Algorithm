@@ -114,3 +114,22 @@ int main(){
   DestoryList(q);
   return 0;
 }
+
+// bool Value(TSMatrix &t, ElemType x, int i, int j){
+//   int k = 0, k1;
+//   if(i >= t.rows || j >= t.cols)
+//     return false;
+//   while(k < t.nums && i > t.data[k].r) k++;
+//   while(k < t.nums && i == t.data[k].r && j > t.data[k].c) k++;
+//   if(t.data[k].r == i && t.data[k].c == j) t.data[k].d = x;
+//   else {
+//     for(k1 = t.nums - 1; k1 >= k; k1--){
+//       t.data[k1 + 1].r = t.data[k1].r;
+//       t.data[k1 + 1].c = t.data[k1].c;
+//       t.data[k1 + 1].d = t.data[k1].d;
+//     }
+//     t.data[k].r = i; t.data[k].c = j; t.data[k].d = x;
+//     t.nums++;
+//   }
+//   return true;
+// }
