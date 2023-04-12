@@ -56,6 +56,110 @@
 // 输出样例：
 // 11
 
+// 我的思路是从后往前搜索，起始时有100元，经过转换最早到达起点即为所需要的最少钱
+// 朴素dijkstra
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+const int N = 2010;
+double d[N][N];
+double dist[N];
+bool st[N];
+int n, m;
+int S, T;
+
+void dijkstra(){
+    for(int i = 1; i <= n; i++) dist[i] = 0x3f3f3f3f;
+    
+    dist[T] = 100;
+    for(int i = 0; i < n; i++){
+        int t = -1;
+        for(int j = 1; j <= n; j++)
+            if(!st[j] && (t == -1 || dist[t] > dist[j]))
+                t = j;
+                
+        st[t] = true;
+        for(int j = 1; j <= n; j++) 
+            if(dist[j] > dist[t] / d[t][j])
+                dist[j] = dist[t] / d[t][j];
+    }
+}
+
+int main(){
+    for(int i = 1; i <= n; i++)
+        for(int j = 1; j <= n; j++)
+            if(i != j) d[i][j] = 0x3f3f3f3f;
+    
+    scanf("%d%d", &n, &m);
+    while(m--){
+        int a, b;
+        double c;
+        scanf("%d%d%lf", &a, &b, &c);
+        c = 100 - c;
+        c /= 100;
+        d[a][b] = d[b][a] = max(d[a][b], c);
+    }
+    scanf("%d%d", &S, &T);
+    dijkstra();
+    
+    printf("%.8lf\n", dist[S]);
+    
+    return 0;
+}
+
+// 朴素dijkstra
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+const int N = 110;
+int g[N][N];
+bool st[N];
+int dist[N];
+int n, m;
+
+void dijkstra(){
+    memset(dist, 0x3f, sizeof dist);
+    dist[1] = 0;
+    for(int i = 0; i < n; i++){
+        int t = -1;
+        for(int j = 1; j <= n; j++)
+            if(!st[j] && (t == -1 || dist[t] > dist[j]))
+                t = j;
+            
+        st[t] = true;
+        for(int j = 1; j <= n; j++)
+            if(!st[j])
+                dist[j] = min(dist[t] + g[t][j], dist[j]);
+    }
+}
+
+int main(){
+    cin >> n >> m;
+    memset(g, 0x3f, sizeof g);
+    while(m--){
+        int a, b, c;
+        cin >> a >> b >> c;
+        g[a][b] = g[b][a] = min(g[a][b], c);
+    }
+    
+    dijkstra();
+    
+    int res = 0;
+    for(int i = 1; i <= n; i++)
+        if(dist[i] == 0x3f3f3f3f){
+            res = -1;
+            break;
+        }
+        else res = max(res, dist[i]);
+        
+    cout << res << endl;
+    
+    return 0;
+}
+
+// 堆优化dijkstra
 #include<iostream>
 #include<cstring>
 #include<queue>
@@ -118,6 +222,108 @@ int main(){
         }
         res = max(res, dist[i]);
     }
+    cout << res << endl;
+    
+    return 0;
+}
+
+// spfa
+#include<iostream>
+#include<cstring>
+#include<queue>
+using namespace std;
+
+const int N = 110, M = 410;
+int h[N], e[M], w[M], ne[M], idx;
+int dist[N];
+bool st[N];
+int n, m;
+
+void add(int a, int b, int c){
+    e[idx] = b, w[idx] = c, ne[idx] = h[a], h[a] = idx++;
+}
+
+void dijkstra(){
+    memset(dist, 0x3f, sizeof dist);
+    queue<int> q;
+    q.push(1);
+    dist[1] = 0;
+    
+    while(q.size()){
+        int t = q.front();
+        q.pop();    
+    
+        st[t] = false;
+        for(int i = h[t]; ~i; i = ne[i]){
+            int j = e[i];
+            if(dist[j] > dist[t] + w[i]){
+                dist[j] = dist[t] + w[i];
+                if(!st[j]){
+                    st[j] = true;
+                    q.push(j);
+                }
+            }
+        }
+    }
+}
+
+int main(){
+    cin >> n >> m;
+    memset(h, -1, sizeof h);
+    while(m--){
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
+        add(b, a, c);
+    }
+    
+    dijkstra();
+    
+    int res = 0;
+    for(int i = 1; i <= n; i++) 
+        if(dist[i] == 0x3f3f3f3f){
+            res = -1;
+            break;
+        }else res = max(res, dist[i]);
+        
+    cout << res << endl;
+    
+    
+    return 0;
+}
+
+// floyd
+#include<iostream>
+#include<cstring>
+using namespace std;
+
+const int N = 110, INF = 0x3f3f3f3f;
+int d[N][N];
+int n, m;
+
+int main(){
+    memset(d, 0x3f, sizeof d);
+    cin >> n >> m;
+    while(m--){
+        int a, b, c;
+        cin >> a >> b >> c;
+        d[a][b] = d[b][a] = min(d[a][b], c);
+    }
+    
+    for(int i = 1; i <= n; i++) d[i][i] = 0;
+    
+    for(int k = 1; k <= n; k++)
+        for(int i = 1; i <= n; i++) 
+            for(int j = 1; j <= n; j++)
+                d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+                
+    int res = 0;
+    for(int i = 1; i <= n; i++)
+        if(d[1][i] == INF){
+            res = -1;
+            break;
+        }else res = max(res, d[1][i]);
+    
     cout << res << endl;
     
     return 0;
