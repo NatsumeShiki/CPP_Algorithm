@@ -1,24 +1,16 @@
 #include<iostream>
+#include<cstring>
 using namespace std;
 
-const int N = 110;
-char s[N][N];
-int n, m;
+const int N = 2e5 + 10;
+int n;
 
 int main(){
-  cin >> n >> m;
-  for(int i = 0; i < n; i++) cin >> s[i];
-
-  for(int i = 0; i < n; i++)
-    for(int j = 0; j < m - 1;){
-      if(s[i][j] == s[i][j + 1] && s[i][j] == 'T'){
-        s[i][j] = 'P';
-        s[i][j + 1] = 'C';
-        j += 2;
-      }else j++;
-    }
-
-  for(int i = 0; i < n; i++) cout << s[i] << endl;
+  int t;
+  scanf("%d", &t);
+  while(t--){
+    
+  }
 
   return 0;
 }
