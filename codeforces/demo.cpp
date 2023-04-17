@@ -1,62 +1,12 @@
-// #include<iostream>
-// #include<cstring>
-// #include<algorithm>
-// #include<vector>
-// #include<queue>
-// using namespace std;
-
-// const int N = 2e5 + 10;
-// vector<int> box[N];
-// vector<int> have[N];
-// int n, q, cnt;
-// int backup[N];
-
-// void solve(){
-//   scanf("%d%d", &n, &q);
-//   while(q--){
-//     int op, a, b;
-//     scanf("%d", &op);
-//     if(op == 1){
-//       scanf("%d%d", &a, &b);
-//       box[b].push_back(a);
-//       have[a].push_back(b);
-//     }else if(op == 2){
-//       scanf("%d", &a);
-//       cnt = box[a].size();
-//       for(int i = 0; i < cnt; i++) backup[i] = box[a][i];
-//       sort(backup, backup + cnt);
-//       for(int i = 0; i < cnt; i++) printf("%d ", backup[i]);
-//       puts("");
-//     }else{
-//       scanf("%d", &a);
-//       cnt = have[a].size();
-//       for(int i = 0; i < cnt; i++) backup[i] = have[a][i];
-//       sort(backup, backup + cnt);
-//       cnt = unique(backup, backup + cnt) - backup;
-//       for(int i = 0; i < cnt; i++) printf("%d ", backup[i]);
-//       puts("");
-//     }
-//   }
-// }
-
-// int main(){
-//   freopen("in.txt", "r", stdin);
-//   freopen("out.txt", "w", stdout);
-//   // ios::sync_with_stdio(false);
-//   // cin.tie(0);
-
-//   solve();
-
-//   return 0;
-// }
-
 #include<iostream>
 #include<cstring>
 #include<algorithm>
 #include<vector>
 #include<queue>
+#include<set>
 using namespace std;
  
+ set<int> s;
 typedef long long LL;
 const int N = 2e6 + 10;
 LL mod = 998244353;
@@ -95,10 +45,12 @@ void solve(){
 }
 
 int main(){
+  #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
   // ios::sync_with_stdio(false);
   // cin.tie(0);
+  #endif
 
   solve();
 
