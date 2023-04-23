@@ -6,76 +6,87 @@
 #include<set>
 using namespace std;
 
-const int N = 30;
-int cnt[N];
+typedef pair<int, int> PII;
+const int N = 2010, M = N * N;
+int n, m, k;
+int h[N], e[M], ne[M], idx;
+int color[N];
 bool st[N];
+PII query[N];
+int dist[N][N];
 
-int lowbit(int x){
-  return x & -x;
+void add(int a, int b){
+  e[idx] = b, ne[idx] = h[a], h[a] = idx++;
+}
+
+void bfs(int s, int dist[]){
+  queue<int> q;
+  q.push(s);
+  st[s] = true;
+  while(q.size()){
+    int t = q.front();
+    q.pop();
+    for(int i = h[t]; ~i; i = ne[i]){
+      int j = e[i];
+      if(!st[j]){
+        dist[j] = dist[t] + 1;
+        q.push(j);
+        st[j] = true;
+      }
+    }
+  }
 }
 
 void solve(){
-  int t;
-  cin >> t;
-  while(t--){
-    memset(cnt, 0, sizeof cnt);
+  scanf("%d%d", &n, &m);
+  memset(h, -1, sizeof h);
+  while(m--){
+    int a, b;
+    scanf("%d%d", &a, &b);
+    add(a, b), add(b, a);
+  }
+
+  for(int i = 1; i <= n; i++){
     memset(st, 0, sizeof st);
-    string s;
-    cin >> s;
-    int n = s.size();
-    for(int i = 0; i < n; i++)
-      cnt[s[i] - 'a']++;
-    int maxd = -1, index = 0;
-    for(int i = 0; i < 30; i++)
-      if(cnt[i] > maxd){
-        maxd = cnt[i];
-        index = i;
+    bfs(i, dist[i]);
+  }
+  // for(int i = 1; i <= n; i++){
+  //   for(int j = 1; j <= n; j++)
+  //     printf("%d ", dist[i][j]);
+  //     puts("");
+  // }
+  scanf("%d", &k);
+  for(int i = 0; i < k; i++) {
+    int p, d;
+    scanf("%d%d", &p, &d);
+    query[i] = {p, d};
+    for(int i = 1; i <= n; i++)
+      if(dist[p][i] < d){
+        color[i] = 1;
       }
+  }
 
-    if(maxd == 1){
-      if(n == 1) puts("0");
-      else if(n <= 3) puts("1");
-      else puts("2");
-      continue; 
-    }
-    if(maxd == n) {
-      puts("0");
-      continue;
-    }
+  for(int i = 1; i <= n; i++)
+    if(!color[i])
+      color[i] = 2;
 
-    char c = 'a' + index;
-    // cout << c << endl;
-    int res = 0;
-    for(int i = 0; i < n;){
-      int j = i;
-      while(j < n && s[j] != c) j++;
-      res = max(res, j - i);
-      i = j + 1;
-    }
-    // cout << res << endl;
-    // cout << lowbit(res) << endl;
-
-    int ans = 0;
-    for(int i = 31; i >= 0; i--){
-      if(res >> i & 1){
-        ans = i;
+  for(int i = 0; i < k; i++){
+    int p = query[i].first, d = query[i].second;
+    bool flag = false;
+    for(int i = 1; i <= n; i++)
+      if(dist[p][i] == d && color[i] == 2){
+        flag = true;
         break;
       }
+    if(!flag) {
+      puts("No");
+      return;
     }
-    // cout << (1 << ans) << endl;
-    ans = 1 << ans;
-    int t = 0;
-    while(ans){
-      ans /= 2;
-      t++;
-    }
-    cout << t << endl;
+  }
 
-    // char c = 'a' + index;
-    // while(true){
-    //   for(int i = 0; i )
-    // }
-  } 
+  puts("Yes");
+  for(int i = 1; i <= n; i++)
+    printf("%d", color[i] - 1);
 }
 
 int main(){
