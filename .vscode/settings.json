@@ -103,7 +103,8 @@
         "sstream": "cpp",
         "03_堆区,cpp": "cpp",
         "unordered_set": "cpp",
-        "ratio": "cpp"
+        "ratio": "cpp",
+        "regex": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled",
     
