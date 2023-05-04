@@ -63,7 +63,7 @@ void DispMart(TSMatrix t){
 }
 
 int main(){
-A[0][1] = 14;
+  A[0][1] = 14;
   A[0][4] = -5;
   A[1][1] = -7;
   A[2][0] = 16;
@@ -89,7 +89,7 @@ A[0][1] = 14;
     printf("\n");
   }
   printf("对应的三元组顺序表\n");
-  DispMart(t);
+  DispMart(tb);
 
   return 0;
 }

@@ -56,35 +56,35 @@ const int N = 10010, M = 50010;
 int n, m;
 int h[N], e[M], ne[M], idx;
 int dfn[N], low[N], timestamp;
-bool in_stk[N];
-int id[N], scc_cnt, sz[N];
-int dout[N];
-int stk[N], top;
+bool in_stk[N]; // 保存i号点是否在栈中
+int id[N], scc_cnt, sz[N]; // id保存i号点是哪个连通块，scc_cnt是连通块的数量，sz保存连通块中点的数量
+int dout[N]; // 保存连通块的出度为多少
+int stk[N], top; // 模拟栈
 
 void add(int a, int b){
     e[idx] = b, ne[idx] = h[a], h[a] = idx++;
 }
 
 void tarjan(int u){
-    dfn[u] = low[u] = ++timestamp;
-    stk[++top] = u, in_stk[u] = true;
-    for(int i = h[u]; ~i; i = ne[i]){
+    dfn[u] = low[u] = ++timestamp; // 先将u点的两个时间戳都定义成一样的
+    stk[++top] = u, in_stk[u] = true; // 将u存入栈中，设置u在栈中
+    for(int i = h[u]; ~i; i = ne[i]){ // 遍历u的所有邻点
         int j = e[i];
-        if(!dfn[j]){
-            tarjan(j);
-            low[u] = min(low[u], low[j]);
-        }else if(in_stk[j]) low[u] = min(low[u], dfn[j]);
+        if(!dfn[j]){ // 如果j还没有设置时间戳
+            tarjan(j); // 则对j做tarjan算法
+            low[u] = min(low[u], low[j]); // 在low[u]和low[j]中取最小值赋值给low[u]，表示u所能到的最小时间戳
+        }else if(in_stk[j]) low[u] = min(low[u], dfn[j]); // 如果j已经有时间戳了，并且j此时在栈中，说明这是一条横叉边，则在low[u]和dfn[j]中取最小值赋值给low[u]，表示u所能到的最小时间戳
     }
     
-    if(dfn[u] == low[u]){
+    if(dfn[u] == low[u]){ // 如果u的时间戳和u所能到的最小时间戳相同，说明u是这个连通分量的最高点
         ++scc_cnt;
-        int y;
+        int y; // 连通分量数量增加
         do{
-            y = stk[top--];
-            in_stk[y] = false;
-            id[y] = scc_cnt;
-            sz[scc_cnt]++;
-        }while(y != u);
+            y = stk[top--]; // 获取栈顶元素
+            in_stk[y] = false;  // 设置它不在栈中
+            id[y] = scc_cnt; // 将这个点的id设置为它是第几个连通分量
+            sz[scc_cnt]++; // 连通块中点的数量增加
+        }while(y != u);  // 直到栈顶元素为u
     }
 }
 
@@ -97,24 +97,25 @@ int main(){
         add(a, b);
     }
     
-    for(int i = 1; i <= n; i++)
+    for(int i = 1; i <= n; i++) // 对每个点做tarjan算法，获取它是在哪个连通块中
         if(!dfn[i])
             tarjan(i);
     
-    for(int i = 1; i <= n; i++)
-        for(int j = h[i]; ~j; j = ne[j]){
+    for(int i = 1; i <= n; i++) // 缩点操作，枚举每个点
+        for(int j = h[i]; ~j; j = ne[j]){ // 枚举它的邻边
             int k = e[j];
-            int a = id[i], b = id[k];
-            if(a != b) dout[a]++;
+            int a = id[i], b = id[k]; // 获取这两个点所在的连通块编号
+            if(a != b) dout[a]++; // 如果这两个点所在的连通块编号不同，那么存在一条a到b的边，将a的出度加1，不需要真的建立这条边
         }
-        
-    int zeros = 0, sum = 0;
-    for(int i = 1; i <= scc_cnt; i++)
-        if(!dout[i]){
-            zeros++;
-            sum += sz[i];
-            if(zeros > 1){
-                sum = 0;
+
+    // 统计每个点的出度是否为0，如果出度为0的连通块大于1，说明不存在受欢迎的牛，如果 出度为0的连通块数量等于1，则结果就是这个连通块中点的数量
+    int zeros = 0, sum = 0; // zeros统计出度为0的连通块数量，sum保存受欢迎的牛的数量
+    for(int i = 1; i <= scc_cnt; i++) 
+        if(!dout[i]){ // 如果编号为i的连通块的出度为0
+            zeros++; // 出度为0数量增加
+            sum += sz[i]; // 受欢迎的牛的数量增加i号连通块中点的数量
+            if(zeros > 1){ // 如果出度为0的连通块数量大于1
+                sum = 0; // 不存在受欢迎的牛
                 break;
             }
         }

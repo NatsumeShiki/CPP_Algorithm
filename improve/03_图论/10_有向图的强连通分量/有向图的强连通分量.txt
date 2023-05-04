@@ -1,0 +1,37 @@
+Tarjan算法求强连通分量SCC
+  对每个点定义两个时间戳：
+    dfn[u]表示遍历到u的时间戳
+    low[u]从u开始走，所能遍历到的最小时间戳是什么
+    u是其所在的强连通分量的最高点，等价于dfn[u] == low[u]
+
+求强连通分量的模板
+void tarjan(int u){
+  dfn[u] = low[u] = ++timestamp; // 先将u点的两个时间戳都定义成一样的
+  stk[++top] = u, in_stk[u] = true; // 将u存入栈中，设置u在栈中
+  for(int i = h[u]; ~i; i = ne[i]){ // 遍历u的所有邻点
+    int j = e[i]; 
+    if(!dfn[j]){ // 如果j还没有设置时间戳
+      tarjan(j); // 则对j做tarjan算法
+      low[u] = min(low[u], low[j]); // 在low[u]和low[j]中取最小值赋值给low[u]，表示u所能到的最小时间戳
+    }else if(in_stk[j]){ // 如果j已经有时间戳了，并且j此时在栈中，说明这是一条横叉边
+      low[u] = min(low[u], dfn[j]); // 则在low[u]和dfn[j]中取最小值赋值给low[u]，表示u所能到的最小时间戳
+    }
+  }
+
+  if(dfn[u] == low[u]){ // 如果u的时间戳和u所能到的最小时间戳相同，说明u是这个连通分量的最高点
+    int y; 
+    ++scc_cnt; // 连通分量数量增加
+    do{
+      y = stk[top--]; // 获取栈顶元素
+      in_stk[y] = false; // 设置它不在栈中
+      id[y] = scc_cnt; // 将这个点的id设置为它是第几个连通分量
+    }while(y != u); // 直到栈顶元素为u
+  }
+}
+
+缩点操作
+for(int i = 1; i <= n; i++) // 遍历每个点
+  for(int j = h[i]; ~j; j = ne[j]) // 遍历i的所有邻点j
+    if(id[i] != id[j]) // 如果i和j不在一个scc中
+      id[i] -> id[j] // 添加一条新边
+最后连通分量编号递减的顺序是拓扑序
