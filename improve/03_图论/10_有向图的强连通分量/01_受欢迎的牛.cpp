@@ -109,7 +109,12 @@ int main(){
         }
 
     // 统计每个点的出度是否为0，如果出度为0的连通块大于1，说明不存在受欢迎的牛，如果 出度为0的连通块数量等于1，则结果就是这个连通块中点的数量
-    int zeros = 0, sum = 0; // zeros统计出度为0的连通块数量，sum保存受欢迎的牛的数量
+
+        
+    printf("%d\n", sum);
+    
+    return 0;
+}    int zeros = 0, sum = 0; // zeros统计出度为0的连通块数量，sum保存受欢迎的牛的数量
     for(int i = 1; i <= scc_cnt; i++) 
         if(!dout[i]){ // 如果编号为i的连通块的出度为0
             zeros++; // 出度为0数量增加
@@ -119,8 +124,3 @@ int main(){
                 break;
             }
         }
-        
-    printf("%d\n", sum);
-    
-    return 0;
-}
