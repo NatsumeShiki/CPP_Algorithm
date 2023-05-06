@@ -7,6 +7,7 @@ map<string, int> Map;
 ofstream output("output.txt", ios::out);
 int t;
 
+void MatchToken(string expected);
 void match0();
 void match1();
 void match2();
@@ -38,6 +39,10 @@ void match27();
 void match28();
 void match29();
 void match30();
+
+// #include"GrammarAnalysis.h"
+// #include"WordAnalysis.h"
+// using namespace std;
 
 void MatchToken(string expected){
 	if (token[t] == expected){

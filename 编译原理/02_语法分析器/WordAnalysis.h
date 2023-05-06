@@ -16,9 +16,7 @@ vector<string> val;
 ifstream in("testfile.txt");
 ofstream out("output.txt");
 
-// void print(){
-//     out << PSS.first << " " << PSS.second << endl;
-// }
+// #include"WordAnalysis.h"
 
 void WordAnalysis(){
     int t, i = 0;

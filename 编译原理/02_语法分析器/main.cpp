@@ -1,5 +1,7 @@
 #include "WordAnalysis.h"
+// #include "WordAnalysis.cpp"
 #include "GrammarAnalysis.h"
+// #include "GrammarAnalysis.cpp"
 
 int main(){
 	init();
