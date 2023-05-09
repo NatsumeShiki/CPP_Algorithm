@@ -4,10 +4,27 @@
 #include<vector>
 #include<queue>
 #include<set>
+#include<vector>
+// #include<bits/stdc++.h>
 using namespace std;
- 
-int n;
+#define x first
+#define y second
+#define int long long
+int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
+typedef long long LL;
+typedef pair<int, int> PII;
+struct edge{
+  int a, b, c;
+  bool operator < (const edge &t) const{
+    return c < t.c;
+  }
+};
+
+int lowbit(int x) { return x & -x; }
+
+const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
+int n;
 
 void solve(){
   int T;

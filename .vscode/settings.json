@@ -4,26 +4,26 @@
     "editor.suggest.snippetsPreventQuickSuggestions": false, // clangd的snippets有很多的跳转点，不用这个就必须手动触发Intellisense了
     "editor.acceptSuggestionOnEnter": "off", // 我个人的习惯，按回车时一定是真正的换行，只有tab才会接受Intellisense
     "editor.snippetSuggestions": "top", // （可选）snippets显示在补全列表顶端，默认是inline
-    // "terminal.integrated.profiles.windows": {
-    //     "PowerShell": {
-    //         "source": "PowerShell", //一般推荐使用powershell
-    //         "overrideName": true,
-    //         "args": [
-    //             "-NoExit",
-    //             "/c",
-    //             "chcp 936"
-    //         ],
-    //         "icon": "terminal-powershell",
-    //         "env": {
-    //             "TEST_VAR": "value"
-    //         }
-    //     }
-    // },
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell", //一般推荐使用powershell
+            "overrideName": true,
+            "args": [
+                "-NoExit",
+                "/c",
+                "chcp 936"
+            ],
+            "icon": "terminal-powershell",
+            "env": {
+                "TEST_VAR": "value"
+            }
+        }
+    },
     "code-runner.runInTerminal": true, // 设置成false会在“输出”中输出，无法输入
     "code-runner.executorMap": {
-        "c": "cd $dir && gcc '$fileName' -o $workspaceRoot/build/$fileNameWithoutExt -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=GBK -D__USE_MINGW_ANSI_STDIO && $workspaceRoot/build/$fileNameWithoutExt",
+        "c": "cd $dir && gcc '$fileName' -o $workspaceRoot/build/$fileNameWithoutExt -Wall -O2 -m64 -lm -static-libgcc  -D__USE_MINGW_ANSI_STDIO && $workspaceRoot/build/$fileNameWithoutExt",
         //"c": " gcc '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=GBK -D__USE_MINGW_ANSI_STDIO && &'./$fileNameWithoutExt.exe'",
-        "cpp": "cd $dir && g++ '$fileName' -o $workspaceRoot/build/$fileNameWithoutExt -Wall -O2 -m64 -static-libgcc -fexec-charset=GBK && $workspaceRoot/build/$fileNameWithoutExt",
+        "cpp": "cd $dir && g++ '$fileName' -o $workspaceRoot/build/$fileNameWithoutExt -Wall -O2 -m64 -static-libgcc && $workspaceRoot/build/$fileNameWithoutExt",
         //"cpp": "g++ '$fileName' -o '$fileNameWithoutExt.exe' -Wall -O2 -m64 -static-libgcc -fexec-charset=GBK && &'./$fileNameWithoutExt.exe'"
         // "c": "gcc $fileName -o $fileNameWithoutExt.exe -Wall -O2 -m64 -lm -static-libgcc -fexec-charset=GBK -D__USE_MINGW_ANSI_STDIO && $dir$fileNameWithoutExt.exe",
         // "cpp": "g++ $fileName -o $fileNameWithoutExt.exe -Wall -O2 -m64 -static-libgcc -fexec-charset=GBK && $dir$fileNameWithoutExt.exe"
