@@ -108,5 +108,10 @@
         "random": "cpp"
     },
     "C_Cpp.errorSquiggles": "enabled",
-    
+    "[cpp]": {
+        "files.encoding": "gbk"
+    },
+    "[c]": {
+        "files.encoding": "gbk"
+    }
 }
