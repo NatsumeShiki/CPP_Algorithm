@@ -1,31 +1,266 @@
-#include<iostream>
-using namespace std;
+#include <stdio.h>
+#include <malloc.h>
 
-const int N = 1e5 + 10;
-struct List{
-  int data[N];
-  int length;
-};
+#define INF     32767               //¶¨Òå¡Ş
+#define MAXV    100                 //×î´ó¶¥µã¸öÊı
 
-void josephus(int n, int m){
-  List* list = (List*)malloc(sizeof(List));
-  list->length = n;
-  for(int i = 0; i < n; i++) list->data[i] = i + 1;
-  printf("å‡ºåˆ—é¡ºåºï¼š");
-  int cur = 0;
-  for(int i = 0; i < n;i ++){
-    cur = (cur + m - 1) % list->length;
-    cout << list->data[cur] << " ";
-    for(int j = cur; j < list->length - 1; j++) list->data[j] = list->data[j + 1];
-    list->length--;
-  }
+// typedef char InfoType;
+// /*-------------------------ÒÔÏÂ¶¨ÒåÁÚ½Ó¾ØÕóÀàĞÍ---------------------------*/
+// typedef struct
+// {
+//     int no;                         //¶¥µã±àºÅ
+//     InfoType info;                  //¶¥µãĞÅÏ¢
+// }VertexType;                        //¶¥µãÀàĞÍ
+
+// typedef struct
+// {
+//     int edges[MAXV][MAXV];          //ÁÚ½Ó¾ØÕóÊı×é(ÓÃÒ»¸ö¶şÎ¬Êı×é´æ·Å¶¥µã¼ä¹ØÏµ(±ß»ò»¡)µÄÊı¾İ)
+//     int n;                          //¶¥µãÊı
+//     int e;                          //±ßÊı
+//     VertexType vexs[MAXV];          //´æ·Å¶¥µãĞÅÏ¢(ÓÃÒ»¸öÒ»Î¬Êı×é´æ·ÅÍ¼ÖĞËùÓĞ¶¥µãÊı¾İ)
+// }MatGraph;                          //ÍêÕûµÄÍ¼ÁÚ½Ó¾ØÕóÀàĞÍ
+
+//ÁÚ½Ó±í±íÊ¾·¨-½«Ã¿¸ö¶¥µãµÄÁÚ½Óµã´®³ÉÒ»¸öµ¥Á´±í
+/*-----------ÒÔÏÂ¶¨ÒåÁÚ½Ó±íÀàĞÍ--------------*/
+typedef struct ArcNode
+{
+    int adjvex;                     //¸Ã±ßµÄÁÚ½Óµã±àºÅ
+    struct ArcNode* nextarc;        //Ö¸ÏòÏÂÒ»Ìõ±ßµÄÖ¸Õë
+    int weight;                     //¸Ã±ßµÄÏà¹ØĞÅÏ¢,ÈçÈ¨Öµ(ÓÃÕûĞÍ±íÊ¾)
+}ArcNode;                           //±ß½áµãÀàĞÍ
+
+typedef struct VNode
+{
+    int info;                  //¶¥µãÆäËûĞÅÏ¢
+    int cnt;                        //´æ·Å¶¥µãÈë¶È,½öÓÃÓÚÍØÆËÅÅĞò
+    ArcNode* firstarc;              //Ö¸ÏòµÚÒ»Ìõ±ß
+}VNode;                             //ÁÚ½Ó±í½áµãÀàĞÍ
+
+typedef struct
+{
+    VNode adjlist[MAXV];            //ÁÚ½Ó±íÍ·½áµãÊı×é
+    int n;                          //Í¼ÖĞ¶¥µãÊı
+    int e;                          //Í¼ÖĞ±ßÊı
+}AdjGraph;                          //ÍêÕûµÄÍ¼ÁÚ½Ó±íÀàĞÍ
+
+/*-------------------------ÁÚ½Ó¾ØÕóµÄ»ù±¾ÔËËãËã·¨---------------------------*/
+/*------------ÓÉ±ßÊı×éA¡¢¶¥µãÊınºÍ±ßÊıe´´½¨Í¼µÄÁÚ½Ó¾ØÕóg--------------------*/
+// void CreateMat(MatGraph& g, int A[MAXV][MAXV], int n, int e)
+// {
+//     int i, j;
+
+//     g.n = n;
+//     g.e = e;
+//     for (i = 0; i < g.n; i++)
+//         for (j = 0; j < g.n; j++)
+//             g.edges[i][j] = A[i][j];
+// }
+
+/*------------Êä³öÁÚ½Ó¾ØÕóg--------------------*/
+// void DispMat(MatGraph g)
+// {
+//     int i, j;
+
+//     for (i = 0; i < g.n; i++)
+//     {
+//         for (j = 0; j < g.n; j++)
+//         {
+//             if (g.edges[i][j] != INF)
+//                 printf("%4d", g.edges[i][j]);
+//             else
+//                 printf("%4s", "¡Ş");
+//         }
+//         printf("\n");
+//     }
+// }
+
+/*-------------------------ÁÚ½Ó±íµÄ»ù±¾ÔËËãËã·¨---------------------------*/
+/*-------------------ÓÉ±ßÊı×éA¡¢¶¥µãÊınºÍ±ßÊıe´´½¨Í¼µÄÁÚ½Ó±íG--------------------*/
+void CreateAdj(AdjGraph*& G, int A[MAXV][MAXV], int n, int e)
+{
+    int i, j;
+    ArcNode* p;
+
+    G = (AdjGraph*)malloc(sizeof(AdjGraph));
+    for (i = 0; i < n; i++)                              //¸øÁÚ½Ó±íÖĞËùÓĞÍ·½áµãµÄÖ¸ÕëÓòÖÃ³õÖµNULL
+    {
+        G->adjlist[i].firstarc = NULL;
+    }
+
+    for (i = 0; i < n; i++)                              //¼ì²éÁÚ½Ó¾ØÕóÖĞµÄÃ¿¸öÔªËØ
+    {
+        for (j = n - 1; j >= 0; j--)
+        {
+            if (A[i][j] != 0 && A[i][j] != INF)          //´æÔÚÒ»Ìõ±ß
+            {
+                p = (ArcNode*)malloc(sizeof(ArcNode)); //´´½¨Ò»¸ö½áµãp
+                p->adjvex = j;                          //ÁÚ½Óµã±àºÅ
+                p->weight = A[i][j];                    //±ßµÄÈ¨ÖØ
+                p->nextarc = G->adjlist[i].firstarc;    //²ÉÓÃÍ·²å·¨²åÈë½áµãp
+                G->adjlist[i].firstarc = p;
+            }
+        }
+    }
+    G->n = n;
+    G->e = e;
 }
 
-int main(){
-  int n, m;
-  printf("è¯·è¾“å…¥nå’Œmï¼š");
-  scanf("%d%d", &n, &m);
-  josephus(n, m);
+/*-------------------Êä³öÁÚ½Ó±íG--------------------*/
+void DispAdj(AdjGraph* G)
+{
+    ArcNode* p;
 
-  return 0;
+    for (int i = 0; i < G->n; i++)
+    {
+        p = G->adjlist[i].firstarc;
+        printf("%d: ", i);
+        while (p != NULL)
+        {
+            printf("%3d[%d]->", p->adjvex, p->weight);  //ÁÚ½Óµã±àºÅ[È¨ÖØ]
+            p = p->nextarc;
+        }
+        printf("\n");
+    }
+}
+
+/*-------------------Ïú»ÙÍ¼µÄÁÚ½Ó±íG--------------------*/
+void DestroyAdj(AdjGraph*& G)
+{
+    ArcNode* pre, * p;
+
+    for (int i = 0; i < G->n; i++)
+    {
+        pre = G->adjlist[i].firstarc;                   //preÖ¸ÏòµÚi¸öµ¥Á´±íµÄÊ×½áµã
+        if (pre != NULL)
+        {
+            p = pre->nextarc;
+            while (p != NULL)                            //ÊÍ·ÅµÚi¸öµ¥Á´±íµÄËùÓĞ±ß½áµã
+            {
+                free(pre);
+                pre = p;
+                p = p->nextarc;
+            }
+            free(pre);
+        }
+    }
+    free(G);                                            //ÊÍ·ÅÍ·½áµãÊı×é
+}
+
+#define MAX_SIZE    100
+
+int visited[MAXV] = { 0 };                             //È«¾ÖÊı×é
+
+/*--------------ÇóÍ¼G´Ó¶¥µãv³ö·¢µÄÉî¶ÈÓÅÏÈÉú³ÉÊ÷----------------*/
+void DFSTree(AdjGraph* G, int v)
+{
+    ArcNode* p;
+
+    visited[v] = 1;                                         //ÖÃÒÑ·ÃÎÊ±ê¼Ç
+    p = G->adjlist[v].firstarc;                             //pÖ¸Ïò¶¥µãvµÄµÚÒ»¸öÏàÁÚµã
+    while (p != NULL)
+    {
+        if (visited[p->adjvex] == 0)                         //Èôp->adjvex¶¥µãÎ´·ÃÎÊ,µİ¹é·ÃÎÊËü
+        {
+            printf("(%d,%d) ", v, p->adjvex);
+            DFSTree(G, p->adjvex);
+        }
+        p = p->nextarc;                                     //pÖ¸Ïò¶¥µãvµÄÏÂÒ»¸öÏàÁÚµã
+    }
+}
+
+/*--------------ÇóÍ¼G´Ó¶¥µãv³ö·¢µÄ¹ã¶ÈÓÅÏÈÉú³ÉÊ÷----------------*/
+void BFSTree(AdjGraph* G, int v)
+{
+    int que[MAXV];                                           //¶¨Òå»·ĞÎ¶ÓÁĞ
+    int que_front = 0, que_rear = 0;
+    ArcNode* p;
+    int visited[MAXV];                                       //¶¨Òå¶¥µã·ÃÎÊ±êÖ¾Êı×é
+    int i;
+    int adjvex;
+
+    for (i = 0; i < G->n; i++)
+        visited[i] = 0;                                      //¶¥µã·ÃÎÊ±êÖ¾Êı×é³õÊ¼»¯
+    visited[v] = 1;                                          //ÖÃÒÑ·ÃÎÊ±ê¼Ç
+    que_rear++;                                              //¶¥µãv½ø¶Ó
+    que[que_rear] = v;
+    while (que_front != que_rear)                             //¶Ó²»¿ÕÑ­»·
+    {
+        que_front = (que_front + 1) % MAXV;
+        adjvex = que[que_front];                             //³ö¶ÓÒ»¸ö¶¥µãadjvex
+        p = G->adjlist[adjvex].firstarc;                     //pÖ¸ÏòadjvexµÄµÚÒ»¸öÏàÁÚµã
+        while (p != NULL)                                     //²éÕÒadjvexµÄËùÓĞÏàÁÚµã
+        {
+            if (visited[p->adjvex] == 0)                      //Èôµ±Ç°ÁÚ½ÓµãÎ´±»·ÃÎÊ
+            {
+                printf("(%d,%d) ", adjvex, p->adjvex);
+                visited[p->adjvex] = 1;                      //ÖÃÒÑ·ÃÎÊ±ê¼Ç
+                que_rear = (que_rear + 1) % MAXV;
+                que[que_rear] = p->adjvex;                   //¶¥µãp->adjvexÈë¶Ó
+            }
+            p = p->nextarc;                                  //pÖ¸Ïò¶¥µãvµÄÏÂÒ»¸öÁÚ½Óµã
+        }
+    }
+    printf("\n");
+}
+
+int main(void)
+{
+    AdjGraph* G;
+    int n = 11;                                  //Í¼¶¥µãÊı
+    int e = 13;                                  //Í¼±ßÊı
+    int A[MAXV][MAXV];
+
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < n; j++)
+            A[i][j] = 0;
+
+    A[0][1] = 1;
+    A[0][2] = 1;
+    A[0][3] = 1;
+
+    A[1][0] = 1;
+    A[1][4] = 1;
+    A[1][5] = 1;
+
+    A[2][0] = 1;
+    A[2][3] = 1;
+    A[2][5] = 1;
+    A[2][6] = 1;
+
+    A[3][0] = 1;
+    A[3][2] = 1;
+    A[3][7] = 1;
+
+    A[4][1] = 1;
+
+    A[5][1] = 1;
+    A[5][2] = 1;
+
+    A[6][2] = 1;
+    A[6][7] = 1;
+    A[6][8] = 1;
+    A[6][9] = 1;
+
+    A[7][3] = 1;
+    A[7][6] = 1;
+    A[7][10] = 1;
+
+    A[8][6] = 1;
+    A[9][6] = 1;
+    A[10][7] = 1;
+
+    CreateAdj(G, A, n, e);
+    printf("Í¼GµÄÁÚ½Ó±í:\n");
+    DispAdj(G);
+    int v = 3;
+    printf("Éî¶ÈÓÅÏÈÉú³ÉÊ÷:\n");
+    DFSTree(G, v);
+    printf("\n");
+    printf("¹ã¶ÈÓÅÏÈÉú³ÉÊ÷:\n");
+    BFSTree(G, v);
+
+    printf("Ïú»ÙÍ¼µÄÁÚ½Ó±í\n");
+    DestroyAdj(G);
+
+    return 0;
 }

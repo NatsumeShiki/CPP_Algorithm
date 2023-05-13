@@ -9,7 +9,6 @@
 using namespace std;
 #define x first
 #define y second
-#define int long long
 int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
@@ -24,7 +23,7 @@ struct edge{
 int lowbit(int x) { return x & -x; }
 
 const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
-int n;
+int n, m, k, t;
 
 void solve(){
   int T;
@@ -34,7 +33,7 @@ void solve(){
   }
 }
 
-int main(){
+signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);

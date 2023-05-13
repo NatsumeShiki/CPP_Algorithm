@@ -9,58 +9,43 @@
 using namespace std;
 #define x first
 #define y second
-int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
-typedef long long LL;
+#define x first
+#define y second
+
 typedef pair<int, int> PII;
-struct edge{
-  int a, b, c;
-  bool operator < (const edge &t) const{
-    return c < t.c;
-  }
-};
-
-int lowbit(int x) { return x & -x; }
-
-const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
-int n;
-struct dre{
-  int b, w, h;
-  bool operator < (const dre &t) const{
-    if(b != t.b) return b < t.b;
-    if(w != t.w) return w < t.w;
-    return h < t.h;
-  }  
-}dress[N];
-int res = 0;
-
-void dfs(int u, dre last, int cnt){
-  res = max(res, cnt);
-  if(cnt + n - u - 1 <= res) return;
-  for(int i = u; i < n; i++){
-    int b = dress[i].b, w = dress[i].w, h = dress[i].h;
-    if(b > last.b && w > last.w && h > last.h)
-      dfs(u + 1, {b, w, h}, cnt + 1);
-  }
-}
+typedef long long LL;
+const int N = 1010;
+LL a[N][N], s[N][N];
+int n, m, k, T;
+PII trans[N];
 
 void solve(){
-  // int T;
-  // cin >> T;
-  // while(T--){
-
-  // }
-  cin >> n;
-  for(int i = 0; i < n; i++){
-    int a, b, c;
-    cin >> a >> b >> c;
-    dress[i] = {a, b, c};
-  }
-  sort(dress, dress + n);
-  
-  dre st = {0, 0, 0};
-  dfs(0, st, 0);
-  cout << res << endl;
+    scanf("%d%d", &n, &m);
+    for(int i = 0; i <= 1000; i++) s[i][0] = s[0][i] = -1e15;
+    s[1][0] = s[0][1] = 0;
+    for(int i = 1; i <= n; i++){    
+        for(int j = 1; j <= m; j++){
+            scanf("%lld", &a[i][j]);
+            s[i][j] = max(s[i - 1][j], s[i][j - 1]) + a[i][j];
+//             cout << s[i][j] << " ";
+        }
+//         cout << endl;
+        }
+    
+    
+    scanf("%d", &T);
+    while(T--){
+        LL res = -1e15;
+        scanf("%d", &k);
+        for(int i = 0; i < k; i++) {
+            int x, y;
+            scanf("%d%d", &x, &y);
+            trans[i] = {x, y};
+        }
+        if(res < 0) res = 0;
+        printf("%lld\n", res + s[n][m]);
+    }
 }
 
 int main(){
