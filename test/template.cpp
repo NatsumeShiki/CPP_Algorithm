@@ -5,50 +5,65 @@
 #include<queue>
 #include<set>
 #include<vector>
+#include<unordered_map>
 // #include<bits/stdc++.h>
 using namespace std;
 #define x first
 #define y second
+int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
-#define x first
-#define y second
-
-typedef pair<int, int> PII;
 typedef long long LL;
-const int N = 1010;
-LL a[N][N], s[N][N];
-int n, m, k, T;
-PII trans[N];
+typedef pair<int, int> PII;
+struct edge{
+  int a, b, c;
+  bool operator < (const edge &t) const{
+    return c < t.c;
+  }
+};
 
-void solve(){
-    scanf("%d%d", &n, &m);
-    for(int i = 0; i <= 1000; i++) s[i][0] = s[0][i] = -1e15;
-    s[1][0] = s[0][1] = 0;
-    for(int i = 1; i <= n; i++){    
-        for(int j = 1; j <= m; j++){
-            scanf("%lld", &a[i][j]);
-            s[i][j] = max(s[i - 1][j], s[i][j - 1]) + a[i][j];
-//             cout << s[i][j] << " ";
-        }
-//         cout << endl;
-        }
-    
-    
-    scanf("%d", &T);
-    while(T--){
-        LL res = -1e15;
-        scanf("%d", &k);
-        for(int i = 0; i < k; i++) {
-            int x, y;
-            scanf("%d%d", &x, &y);
-            trans[i] = {x, y};
-        }
-        if(res < 0) res = 0;
-        printf("%lld\n", res + s[n][m]);
-    }
+int lowbit(int x) { return x & -x; }
+
+const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
+int n, m, k, t;
+unordered_map<int, int> pos;
+int pre[N], in[N], post[N];
+int cnt;
+
+void build(int il, int ir, int pl, int pr){
+    int root = pre[pl];
+    int k = pos[root];
+
+    if(il < k) build(il, k - 1, pl + 1, pr + 1 + (k - 1 - il));
+    if(k < ir) build(k + 1, ir, pl + 1 + (k - 1 - il) + 1, pr);
+
+    post[cnt++] = root;
 }
 
-int main(){
+void solve(){
+//   int T;
+//   cin >> T;
+//   while(T--) {
+//   }
+
+    string a, b;
+    while(cin >> a >> b){
+        int n = a.size();
+        cnt = 0;
+        for(int i = 0; i < n; i++) pre[i] = a[i] - 'A';
+        for(int i = 0; i < n; i++) {
+            in[i] = b[i] - 'A';
+            pos[in[i]] = i;
+        }
+
+        build(0, n - 1, 0, n - 1);
+
+        for(int i = 0; i < cnt; i++) printf("%c", post[i] + 'A');
+        puts("");
+    }
+
+}
+
+signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
