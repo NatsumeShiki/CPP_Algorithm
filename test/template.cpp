@@ -23,44 +23,36 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
-int n, m, k, t;
-unordered_map<int, int> pos;
-int pre[N], in[N], post[N];
-int cnt;
+const int N = 10, M = 20;
+bool col[N], row[N], deg[M], rdeg[M];
+int g[N][N];
+int n;
+int res;
 
-void build(int il, int ir, int pl, int pr){
-    int root = pre[pl];
-    int k = pos[root];
+void dfs(int x, int y, int cnt){
+  if(y == n) x++, y = 0;
+  if(x == n){
+    if(cnt == n) res++;
+    return;
+  }
 
-    if(il < k) build(il, k - 1, pl + 1, pr + 1 + (k - 1 - il));
-    if(k < ir) build(k + 1, ir, pl + 1 + (k - 1 - il) + 1, pr);
-
-    post[cnt++] = root;
+  dfs(x, y + 1, cnt);
+  if(g[x][y] == 1 && !row[x] && !col[y] && !deg[x + y] && !rdeg[x - y + n]){
+    row[x] = col[y] = deg[x + y] = rdeg[x - y + n] = true;
+    dfs(x, y + 1, cnt + 1);
+    row[x] = col[y] = deg[x + y] = rdeg[x - y + n] = false;
+  }
 }
 
 void solve(){
-//   int T;
-//   cin >> T;
-//   while(T--) {
-//   }
+  cin >> n;
+  for(int i = 0; i < n; i++)
+    for(int j = 0; j < n; j++)
+      cin >> g[i][j];
 
-    string a, b;
-    while(cin >> a >> b){
-        int n = a.size();
-        cnt = 0;
-        for(int i = 0; i < n; i++) pre[i] = a[i] - 'A';
-        for(int i = 0; i < n; i++) {
-            in[i] = b[i] - 'A';
-            pos[in[i]] = i;
-        }
-
-        build(0, n - 1, 0, n - 1);
-
-        for(int i = 0; i < cnt; i++) printf("%c", post[i] + 'A');
-        puts("");
-    }
-
+  dfs(0, 0, 0);
+  cout << res * (res - 1) <<endl;
+  cout << res << endl;
 }
 
 signed main(){
