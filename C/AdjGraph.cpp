@@ -24,7 +24,7 @@ struct SqQueue{
 };
 
 void CreateAdj(AdjGraph *&G, int A[MAXV][MAXV], int n, int e){
-    int i, j;
+    int i, j = 0;
     ArcNode *p;
     G = (AdjGraph*)malloc(sizeof(AdjGraph));
     for(i = 0; i < n; i++)
@@ -51,7 +51,6 @@ void DispAdj(AdjGraph *G){
             printf("%3d[%d]->", p->adjvex, p->weight);
             p = p->nextarc;
         }
-        // puts("¡Ä");
         puts("");
     }
 }
