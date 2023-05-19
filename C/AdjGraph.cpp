@@ -85,7 +85,7 @@ void BFSTree(AdjGraph *G, int v){
         p = G->adjlist[adjvex].firstarc;
         while(p){
             if(visited[p->adjvex] == 0){
-                printf("(%d,%d) ", adjvex, p->adjvex);
+                // printf("(%d,%d) ", adjvex, p->adjvex);
                 visited[p->adjvex] = 1;
                 rear = (rear + 1) % MAXV;
                 q[rear] = p->adjvex;
@@ -93,6 +93,7 @@ void BFSTree(AdjGraph *G, int v){
             p = p->nextarc;
         }
     }
+    cout << q[rear];
     puts("");
 }
 

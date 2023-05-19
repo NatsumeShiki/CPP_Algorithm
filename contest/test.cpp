@@ -5,7 +5,6 @@
 #include<queue>
 #include<set>
 using namespace std;
- 
 
 void solve(){
 
