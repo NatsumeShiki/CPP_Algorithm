@@ -22,7 +22,7 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 1e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
+const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
 int n, m, k, t;
 
 void solve(){
