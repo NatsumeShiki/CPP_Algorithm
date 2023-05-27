@@ -24,20 +24,41 @@ int lowbit(int x) { return x & -x; }
 
 const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
 int n, m, k, t;
-int cnt[35];
+int a[N], cnt[35];
 
 void solve(){
   int T;
   cin >> T;
   while(T--){
     cin >> n >> m;
-    for(int i = 0; i < n; i++){
-      int x;
-      cin >> x;
-      for(int j = 0; j <= 30; j++)
-        if(x >> j & 1)
+    memset(cnt, 0, sizeof cnt);
+    for(int i = 0; i < n; i++) {
+      cin >> a[i];
+      for(int j = 30; j >= 0; j--)
+        if(a[i] >> j & 1)
           cnt[j]++;
     }
+
+    for(int i = 30; i >= 0; i--){
+      // cout << cnt[i] << endl;
+      if(cnt[i] + m >= n){
+        // cout << cnt[i] + m << " " << i << endl;
+        for(int j = 0; j < n; j++)
+          a[j] |= 1 << i;
+        m -= (n - cnt[i]);
+        // cout << m << endl;
+      }
+    }
+//     2
+// 4
+// 2147483646
+// 1073741825
+
+
+    for(int i = 1; i < n; i++) a[0] &= a[i];
+
+    cout << a[0] << endl;
+
 
 
   }
