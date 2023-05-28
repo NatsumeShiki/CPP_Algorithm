@@ -15,6 +15,7 @@ vector<string> token;
 vector<string> val;
 ifstream in("testfile.txt");
 ofstream out("error.txt");
+ofstream out1("res.txt");
 
 // #include"WordAnalysis.h"
 
