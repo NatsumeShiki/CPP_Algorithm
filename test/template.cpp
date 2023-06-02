@@ -44,15 +44,37 @@ void dfs(int x, int y, int cnt){
   }
 }
 
-void solve(){
-  cin >> n;
-  for(int i = 0; i < n; i++)
-    for(int j = 0; j < n; j++)
-      cin >> g[i][j];
+int s[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-  dfs(0, 0, 0);
-  cout << res * (res - 1) <<endl;
-  cout << res << endl;
+void solve(){
+  int n = 100;
+  int arr[100];
+  for(int i = 0; i < n; i++) cin >> arr[i];
+  set<int> S;
+  int cnt = 0;
+  for(int a = 0; a < n; a++)
+    for(int b = a + 1; b < n; b++)
+      for(int c = b + 1; c < n; c++)
+        for(int d = c + 1; d < n; d++){
+          int year = arr[a] * 1000 + arr[b] * 100 + arr[c] * 10 + arr[d];
+          if(year != 2023) continue;
+          for(int e = d + 1; e < n; e++)
+            for(int f = e + 1; f < n; f++){
+              int month = arr[e] * 10 + arr[f];
+              if(month < 1 || month > 12) continue;
+              for(int g = f + 1; g < n; g++)
+                for(int h = g + 1; h < n; h++){
+                  int day = arr[g] * 10 + arr[h];
+                  if(day >= 1 && day <= s[month]){
+                    S.insert(year * 1000 + month * 100 + day);
+                    cnt++;
+                  }
+                } 
+            }
+        }
+
+  cout << S.size() << endl;
+  cout << cnt << endl;
 }
 
 signed main(){
