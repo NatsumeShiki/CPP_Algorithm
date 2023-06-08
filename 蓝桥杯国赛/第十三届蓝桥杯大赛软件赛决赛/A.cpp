@@ -5,10 +5,13 @@
 using namespace std;
 
 typedef long long LL;
+LL res; 
+
 
 
 void solve(){
-
+	dfs(0, 1, 0);
+	cout << res << endl;
 }
 
 int main(){
