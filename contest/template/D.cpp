@@ -8,8 +8,10 @@ int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
 typedef pair<int, int> PII;
-typedef pair<int, PII> PIII;
-typedef pair<int, PIII> PIIII;
+typedef pair<PII, int> PIII;
+typedef pair<PIII, int> PIIII;
+typedef pair<int, char> PIC;
+typedef pair<char, int> PCI;
 struct edge{
   int a, b, c;
   bool operator < (const edge &t) const{
@@ -21,6 +23,7 @@ int lowbit(int x) { return x & -x; }
 
 const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
 int n, m, k, t;
+int arr[N];
 
 void solve(){
 
