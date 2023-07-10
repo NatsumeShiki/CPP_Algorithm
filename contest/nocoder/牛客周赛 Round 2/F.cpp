@@ -4,7 +4,6 @@ using namespace std;
 #define int long long
 #define x first
 #define y second
-#define endl "\n"
 int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;

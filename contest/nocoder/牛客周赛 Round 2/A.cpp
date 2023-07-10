@@ -4,7 +4,6 @@ using namespace std;
 #define int long long
 #define x first
 #define y second
-#define endl "\n"
 int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
@@ -27,7 +26,19 @@ int n, m, k, t;
 int arr[N];
 
 void solve(){
+  string s, t;
+  cin >> s >> t;
 
+  n = s.size();
+  m = t.size();
+  s += s;
+  int res = 0;
+  for(int i = 0; i < n; i++){
+    // cout << s.substr(i, i + m) << endl;
+    if(s.substr(i, m) == t)
+      res++;
+  }
+  cout << res << endl;
 }
 
 signed main(){
@@ -39,7 +50,7 @@ signed main(){
   #endif
 
   int T = 1;
-  cin >> T;
+  // cin >> T;
   while(T--){
     solve();
   }

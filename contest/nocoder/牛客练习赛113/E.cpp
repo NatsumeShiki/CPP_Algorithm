@@ -27,39 +27,50 @@ int arr[N];
 
 void solve(){
   cin >> n >> m;
-  int minv = n - 1, maxv = (n - 1) * n / 2;
-  if(m < minv || m > maxv) {
+  
+  if(m < n - 1 || m > n * (n - 1) / 2) {
     puts("-1");
     return;
   }
 
-  int i = 2, t = 1, cnt = n - 1, now = 1;
-  arr[1] = 1;
-  for(; i <= n; i++, t = !t, cnt--){
-    int x = now;
-    if(t == 1) x += cnt;
-    else x -= cnt;
-
-    cout << x << " " << m << " " << cnt << endl;
-    int last = n - i + 1;
-    if(n * (n + 1) / 2 < m){
-  
-    }
-    if(m > cnt){
-      arr[x] = i;
-      m -= cnt;
-      now = x;
-    }else{
-      break;
-    }
-    
+  int cnt = 1;
+  while(m > n - cnt && m - n + cnt >= n - cnt - 1){
+    m -= n - cnt;
+    cnt++;
+    cout << m << " " << cnt << endl;
   }
 
-  cout << i << " " << now << endl;
-  if(arr[now + 1] == 0){
-    for(now++; i <= n; i++, now++) arr[now] = i;
+  cout << cnt << endl;
+  for(int i = 1, j = 1; j <= cnt; i++, j += 2)
+    arr[i] = j;
+  for(int i = n, j = 2; j <= cnt; i--, j += 2)
+    arr[i] = j;
+    
+
+  for(int i = 1; i <= n; i++) cout << arr[i] << " ";
+  puts("");
+
+  if(cnt % 2 == 1){
+    for(int i = (cnt + 1) / 2 + 1, j = cnt + 1; j <= n; i++, j++)
+      arr[i] = j;
+
+for(int i = 1; i <= n; i++) cout << arr[i] << " ";
+  puts("");
+
+      int a = n - cnt / 2;
+      m -= n - cnt;
+      int b = a - m;
+      cout << a << " " << b << " " << m << endl;
+      // swap(arr[a], arr[b]);
+      reverse(arr + b, arr + a + 1);
   }else{
-    for(now--; i <= n; i++, now--) arr[now] = i;
+    for(int i = n - cnt / 2, j = cnt + 1; j <= n; i--, j++)
+      arr[i] = j;
+      int a = cnt / 2 + 1;
+      m -= n - cnt;
+      int b = a + m;
+      cout << a << " " << b << endl;
+      // swap(arr[a], arr[b]);
   }
 
   for(int i = 1; i <= n; i++) cout << arr[i] << " ";
