@@ -10,7 +10,7 @@ int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 typedef long long LL;
 typedef pair<int, int> PII;
 typedef pair<PII, int> PIII;
-typedef pair<PIII, int> PIIII;
+typedef pair<PII, PII> PIIII;
 typedef pair<int, char> PIC;
 typedef pair<char, int> PCI;
 struct edge{
@@ -34,8 +34,8 @@ signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
-  // ios::sync_with_stdio(false);
-  // cin.tie(0);
+  ios::sync_with_stdio(false);
+  cin.tie(0);
   #endif
 
   int T = 1;

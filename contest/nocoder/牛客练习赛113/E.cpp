@@ -37,30 +37,30 @@ void solve(){
   while(m > n - cnt && m - n + cnt >= n - cnt - 1){
     m -= n - cnt;
     cnt++;
-    cout << m << " " << cnt << endl;
+    // cout << m << " " << cnt << endl;
   }
 
-  cout << cnt << endl;
+  // cout << cnt << endl;
   for(int i = 1, j = 1; j <= cnt; i++, j += 2)
     arr[i] = j;
   for(int i = n, j = 2; j <= cnt; i--, j += 2)
     arr[i] = j;
     
 
-  for(int i = 1; i <= n; i++) cout << arr[i] << " ";
-  puts("");
+  // for(int i = 1; i <= n; i++) cout << arr[i] << " ";
+  // puts("");
 
   if(cnt % 2 == 1){
     for(int i = (cnt + 1) / 2 + 1, j = cnt + 1; j <= n; i++, j++)
       arr[i] = j;
 
-for(int i = 1; i <= n; i++) cout << arr[i] << " ";
-  puts("");
+// for(int i = 1; i <= n; i++) cout << arr[i] << " ";
+//   puts("");
 
       int a = n - cnt / 2;
       m -= n - cnt;
       int b = a - m;
-      cout << a << " " << b << " " << m << endl;
+      // cout << a << " " << b << " " << m << endl;
       // swap(arr[a], arr[b]);
       reverse(arr + b, arr + a + 1);
   }else{
@@ -69,8 +69,9 @@ for(int i = 1; i <= n; i++) cout << arr[i] << " ";
       int a = cnt / 2 + 1;
       m -= n - cnt;
       int b = a + m;
-      cout << a << " " << b << endl;
+      // cout << a << " " << b << endl;
       // swap(arr[a], arr[b]);
+      reverse(arr + a, arr + b + 1);
   }
 
   for(int i = 1; i <= n; i++) cout << arr[i] << " ";
