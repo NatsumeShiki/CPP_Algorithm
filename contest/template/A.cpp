@@ -34,7 +34,7 @@ signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
-  #endif
+  #endifcontest/template/A.cpp contest/template/B.cpp contest/template/C.cpp contest/template/D.cpp contest/template/E.cpp contest/template/F.cpp contest/template/G.cpp contest/template/H.cpp contest/template/in.txt contest/template/out.txt
   ios::sync_with_stdio(false);
   cin.tie(0);
 
