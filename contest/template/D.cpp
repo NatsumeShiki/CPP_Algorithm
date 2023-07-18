@@ -34,9 +34,9 @@ signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
-  // ios::sync_with_stdio(false);
-  // cin.tie(0);
   #endif
+  ios::sync_with_stdio(false);
+  cin.tie(0);
 
   int T = 1;
   cin >> T;
