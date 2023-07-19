@@ -9,7 +9,7 @@ int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
 typedef pair<int, int> PII;
-typedef pair<PII, int> PIII;
+typedef pair<int, PII> PIII;
 typedef pair<PII, PII> PIIII;
 typedef pair<int, char> PIC;
 typedef pair<char, int> PCI;
@@ -33,34 +33,34 @@ void add(int a, int b){
   e[idx] = b, ne[idx] = h[a], h[a] = idx++;
 }
 
-void bfs(){
-  queue<PII> q;
-  while(k--){
-    int a, b;
-    cin >> a >> b;
-    q.push({a, -1});
-    cnt[a] = max(cnt[a], b + 1);
-    st[a] = true;
-  }
+// void bfs(){
+//   queue<PII> q;
+//   while(k--){
+//     int a, b;
+//     cin >> a >> b;
+//     q.push({a, -1});
+//     cnt[a] = max(cnt[a], b + 1);
+//     st[a] = true;
+//   }
 
-  while(q.size()){
-    auto t = q.front();
-    q.pop();
-    int u = t.x, fa = t.y;
-    // cout <<  u<< endl;
-    for(int i = h[u]; ~i; i = ne[i]){
-      int j = e[i];
-      if(j == fa) continue;
-      if(cnt[u] - 1 > cnt[j]){
-        cnt[j] = cnt[u] - 1;
-        st[j] = true;
-        // if(!st2[j]) {
-          q.push({j, u});
-        // }  
-      }
-    }
-  }
-}
+//   while(q.size()){
+//     auto t = q.front();
+//     q.pop();
+//     int u = t.x, fa = t.y;
+//     // cout <<  u<< endl;
+//     for(int i = h[u]; ~i; i = ne[i]){
+//       int j = e[i];
+//       if(j == fa) continue;
+//       if(cnt[u] - 1 > cnt[j]){
+//         cnt[j] = cnt[u] - 1;
+//         st[j] = true;
+//         // if(!st2[j]) {
+//           q.push({j, u});
+//         // }  
+//       }
+//     }
+//   }
+// }
 
 // void dfs(int u, int fa){
 //   // cout << u << " " << cnt[u] << endl;
@@ -76,6 +76,33 @@ void bfs(){
 //   }
 // }
 
+void dijkstra(){
+  priority_queue<PIII, vector<PIII>, less<PIII>> heap;
+  while(k--){
+    int a, b;
+    cin >> a >> b;
+    cnt[a] = max(cnt[a], b + 1);
+    heap.push({cnt[a], {a, -1}});
+    st[a] = true;
+  }
+
+  while(heap.size()){
+    auto t = heap.top();
+    heap.pop();
+
+    int u = t.y.x, fa = t.y.y;
+    for(int i = h[u]; ~i; i = ne[i]){
+      int j = e[i];
+      if(j == fa) continue;
+      if(cnt[u] - 1 > cnt[j]){
+        cnt[j] = cnt[u] - 1;
+        st[j] = true;
+        heap.push({cnt[j], {j, u}});
+      }
+    }
+  }
+}
+
 void solve(){
   cin >> n >> m >> k;
   memset(h, -1, sizeof h);
@@ -85,7 +112,8 @@ void solve(){
     add(a, b), add(b, a);
   }
 
-  bfs();
+  // bfs();
+  dijkstra();
 
   // while(k--){
   //   int a, b;

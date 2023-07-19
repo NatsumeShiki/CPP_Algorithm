@@ -11,7 +11,7 @@
                 "_UNICODE"
             ],
             "windowsSdkVersion": "10.0.19041.0",
-            "compilerPath": "D:/development-environment/mingw64/bin/gcc.exe",
+            "compilerPath": "D:/development-environment/mingw64/bin/gcc.exe", //此处是编译器路径，以后可直接在此修改
             "cStandard": "c17",
             "cppStandard": "c++17",
             "intelliSenseMode": "windows-gcc-x64"
