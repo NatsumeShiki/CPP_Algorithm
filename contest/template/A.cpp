@@ -5,6 +5,7 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
+#define FOR(n) for(int i = 0; i < n; i++) 
 int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
@@ -22,21 +23,22 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f;
+const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t;
 int arr[N];
+vector<int> alls;
 
 void solve(){
-
+  
 }
 
 signed main(){
   #ifndef ONLINE_JUDGE
   freopen("in.txt", "r", stdin);
   freopen("out.txt", "w", stdout);
-  #endifcontest/template/A.cpp contest/template/B.cpp contest/template/C.cpp contest/template/D.cpp contest/template/E.cpp contest/template/F.cpp contest/template/G.cpp contest/template/H.cpp contest/template/in.txt contest/template/out.txt
+  #endif
   ios::sync_with_stdio(false);
-  cin.tie(0);
+  cin.tie(nullptr);
 
   int T = 1;
   cin >> T;
