@@ -63,13 +63,13 @@ void solve(){
     }else{
       if(i < n) i++;
       else {
-              for(int j = 0; j < 32; j++){
-        if(((a[k] >> j) & 1) == 0)
-          cnt[j]--;
-        // printf("%d ", ((a[k] >> j) & 1) == 0);
-      }
-      // puts("");
-      k++;
+        for(int j = 0; j < 32; j++){
+          if(((a[k] >> j) & 1) == 0)
+            cnt[j]--;
+          // printf("%d ", ((a[k] >> j) & 1) == 0);
+        }
+        // puts("");
+        k++;
       }
     }
   }
