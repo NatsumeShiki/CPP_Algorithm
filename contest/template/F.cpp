@@ -5,7 +5,10 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
-#define FOR(n) for(int i = 0; i < n; i++) 
+#define rep(i,a,b) for(int i = int(a);i <= int(b);++i)
+#define rer(i,a,b) for(int i = int(b);i >= int(a);--i)
+#define pep(i,a,b) for(int i = int(a);i < int(b);++i)
+#define per(i,a,b) for(int i = int(b);i > int(b);--i);
 int dx[4] = {-1, 0, 1, 0}, dy[4] = {0, 1, 0, -1};
 
 typedef long long LL;
@@ -39,6 +42,7 @@ signed main(){
   #endif
   ios::sync_with_stdio(false);
   cin.tie(nullptr);
+  cout.tie(nullptr);
 
   int T = 1;
   cin >> T;
