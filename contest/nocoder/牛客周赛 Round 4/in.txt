@@ -1,0 +1,9 @@
+3 3 2
+ranko 1 1
+kotori 2 2
+5
+ranko D
+ranko W
+ranko A
+kotori W
+kotori W

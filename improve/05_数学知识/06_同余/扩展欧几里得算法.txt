@@ -1,0 +1,11 @@
+gcd(a, b) = d
+ax + by = d
+gcd(a, b) = gcd(b, a % b)
+yb + x * (a mod b) = d
+yb + x * (a - a/b * b) = d
+yb + ax - a/b * bx = d
+ax + b(y - a/b * x) = d
+x' = x   y' = y - a/b * x
+
+ax 同余 b(mod c)，就是说给了a，b，c，让你求一个x，使得上述等式成立
+可以转化成 ax + cy = b，也就是使用扩展欧几里得算法
