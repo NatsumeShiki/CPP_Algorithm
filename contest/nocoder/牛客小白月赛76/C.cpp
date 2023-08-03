@@ -35,11 +35,10 @@ void solve(){
   int a, b;
   cin >> n >> m;
   a = m, b = n - m;
-  if(a % b == m){
-    cout << a << " " << b << endl;
-    return;
-  }
-
+  if(b && a % b == m) cout << a << " " << b << endl;
+  else cout << "-1\n";
+  // if(n <= m * 2) cout << "-1\n";
+  // else cout << a << " " << b << endl;
 }
 
 signed main(){

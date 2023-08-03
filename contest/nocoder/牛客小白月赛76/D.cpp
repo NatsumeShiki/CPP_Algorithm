@@ -32,7 +32,24 @@ int arr[N];
 vector<int> alls;
 
 void solve(){
-  
+  cin >> n;
+  int res = 0;
+  bool flag = false;
+  while(n--){
+    int x;
+    cin >> x;
+    if(!flag){
+      res = max(res + x, res * x);
+      if(res >= mod) {
+        res %= mod;
+        flag = true;
+      }
+    }else{
+      if(x == 0 || x == 1) res = (res + x ) % mod;
+      else res = res * x % mod;
+    }
+  }
+  cout << res << endl;
 }
 
 signed main(){
