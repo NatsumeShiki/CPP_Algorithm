@@ -26,13 +26,48 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
+const int N = 3010, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t;
 int arr[N];
 vector<int> alls;
+int dp[N][N];
+
+// void solve(){
+//   string s;
+//   cin >> s;
+//   int n = s.size();
+//   s = ' ' + s;
+//   vector<vector<int>> dp(n + 1, vector<int>(n + 1, 0));
+//   dp[0][0] = 1;
+//   for(int i = 1; i <= n; i ++ ){
+//     for(int j = (i + 1) / 2; j <= n; j ++ ){
+//       if(s[i] == ')') dp[i][j] = (dp[i][j] + dp[i - 1][j]) % mod;
+//       else if(s[i] == '(') dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % mod;
+//       else{
+//         dp[i][j] = (dp[i][j] + dp[i-1][j]) % mod;
+//         dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % mod;
+//       }
+//     }
+//   }
+//   cout << dp[n][n / 2] << endl;
+// }
 
 void solve(){
-  
+  string s;
+  cin >> s;
+  n = s.size();
+  s = " " + s;
+  dp[0][0] = 1;
+  for(int i = 1; i <= n; i++){
+    for(int j = (i + 1) / 2; j <= i; j++){
+      if(s[i] == '(') dp[i][j] = (dp[i][j] + dp[i - 1][j - 1]) % mod;
+      else if(s[i] == ')') dp[i][j] = (dp[i][j] + dp[i - 1][j]) % mod;
+      else dp[i][j] = (dp[i][j] + dp[i - 1][j - 1] + dp[i - 1][j]) % mod;
+      // cout << i << " " << j << " " << dp[i][j] << endl;
+    }
+    // cout << endl;
+  }
+  cout << dp[n][n / 2] << endl;
 }
 
 signed main(){
@@ -45,7 +80,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }
