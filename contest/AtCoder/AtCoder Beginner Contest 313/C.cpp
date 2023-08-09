@@ -32,7 +32,16 @@ int arr[N];
 vector<int> alls;
 
 void solve(){
-  
+  cin >> n;
+  int sum = 0;
+  for(int i = 0; i < n; i++) cin >> arr[i], sum += arr[i];
+  sum /= n;
+  int a = 0, b = 0;
+  for(int i = 0; i < n; i++){
+    if(arr[i] < sum) a += sum - arr[i];
+    else if(arr[i] > sum + 1) b += arr[i] - sum - 1;
+  }
+  cout << max(a, b) << endl;
 }
 
 signed main(){
@@ -45,7 +54,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }

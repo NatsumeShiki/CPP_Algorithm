@@ -30,9 +30,22 @@ const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t;
 int arr[N];
 vector<int> alls;
+bool st[N];
 
 void solve(){
-  
+  cin >> n >> m;
+  while(m--){
+    int a, b;
+    cin >> a >> b;
+    st[b] = true;
+  }
+
+  vector<int> res;
+  for(int i = 1; i <= n; i++)
+    if(!st[i])
+      res.push_back(i);
+  if(res.size() == 1) cout << res[0] << endl;
+  else cout << -1 << endl;
 }
 
 signed main(){
@@ -45,7 +58,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }

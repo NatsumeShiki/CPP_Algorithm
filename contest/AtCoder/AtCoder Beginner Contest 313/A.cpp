@@ -32,7 +32,15 @@ int arr[N];
 vector<int> alls;
 
 void solve(){
-  
+  cin >> n;
+  int maxv = 0;
+  for(int i = 0; i < n; i++){
+    cin >> arr[i];
+    if(i) maxv = max(maxv, arr[i]);
+  }
+
+  if(maxv < arr[0]) cout << 0 << endl;
+  else cout << maxv - arr[0] + 1 << endl;
 }
 
 signed main(){
@@ -45,7 +53,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }
