@@ -15,6 +15,8 @@ typedef long long LL;
 typedef pair<int, int> PII;
 typedef pair<PII, int> PIII;
 typedef pair<PII, PII> PIIII;
+typedef pair<string, int> PSI;
+typedef pair<int, string> PIS;
 typedef pair<int, char> PIC;
 typedef pair<char, int> PCI;
 struct edge{
@@ -27,8 +29,8 @@ struct edge{
 int lowbit(int x) { return x & -x; }
 
 const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
-int n, m, k, t;
-int arr[N];
+int n, m, k, t, q;
+int arr[M];
 vector<int> alls;
 
 void solve(){
