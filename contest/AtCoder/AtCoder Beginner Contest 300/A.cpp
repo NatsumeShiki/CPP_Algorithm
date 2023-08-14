@@ -5,7 +5,6 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
-#define all(a) a.begin(), a.end()
 #define rep(i,a,b) for(int i = int(a);i <= int(b);++i)
 #define rer(i,a,b) for(int i = int(b);i >= int(a);--i)
 #define pep(i,a,b) for(int i = int(a);i < int(b);++i)
@@ -32,10 +31,19 @@ int lowbit(int x) { return x & -x; }
 const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t, q;
 int arr[M];
-vector<int> ve;
+vector<int> alls;
 
 void solve(){
-  
+  int a, b;
+  cin >> n >> a >> b;
+  for(int i = 1; i <= n; i++){
+    int x;
+    cin >> x;
+    if(x == a + b) {
+      cout << i << endl;
+      return;
+    }
+  }
 }
 
 signed main(){
@@ -48,7 +56,7 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
+  // cin >> T;
   while(T--){
     solve();
   }

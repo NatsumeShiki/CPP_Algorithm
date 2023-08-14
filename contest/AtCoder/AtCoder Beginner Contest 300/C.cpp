@@ -5,7 +5,6 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
-#define all(a) a.begin(), a.end()
 #define rep(i,a,b) for(int i = int(a);i <= int(b);++i)
 #define rer(i,a,b) for(int i = int(b);i >= int(a);--i)
 #define pep(i,a,b) for(int i = int(a);i < int(b);++i)
@@ -29,13 +28,39 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
+const int N = 110, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t, q;
-int arr[M];
-vector<int> ve;
+bool st[N][N];
+vector<int> alls;
+char g[N][N];
+int cnt[N];
+
+void dfs(int x, int y, int t){
+  int a = x + 1, b = y + 1;
+  if(a < n && b < m && g[a][b] == '#') {
+    dfs(a, b, t + 1);
+    st[a][b] = true;
+  }
+  else {
+    cnt[(t - 1) / 2]++;
+    // cout << x << " " << y << " " << t << endl;
+  }
+}
 
 void solve(){
-  
+  cin >> n >> m;
+  for(int i = 0; i < n; i++) cin >> g[i];
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < m; j++){
+      if(g[i][j] == '.' || st[i][j]) continue;
+      st[i][j] = true;
+      dfs(i, j, 1);
+      // cout << i << " " << j << endl;
+    }
+  }
+
+  for(int i = 1; i <= min(n, m); i++) cout << cnt[i] << " ";
+  cout << endl;
 }
 
 signed main(){
@@ -48,7 +73,7 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
+  // cin >> T;
   while(T--){
     solve();
   }

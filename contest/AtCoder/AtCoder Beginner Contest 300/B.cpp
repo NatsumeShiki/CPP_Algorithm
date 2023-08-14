@@ -5,7 +5,6 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
-#define all(a) a.begin(), a.end()
 #define rep(i,a,b) for(int i = int(a);i <= int(b);++i)
 #define rer(i,a,b) for(int i = int(b);i >= int(a);--i)
 #define pep(i,a,b) for(int i = int(a);i < int(b);++i)
@@ -29,13 +28,34 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
+const int N = 40, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
 int n, m, k, t, q;
 int arr[M];
-vector<int> ve;
+vector<int> alls;
+char a[N][N], b[N][N];
 
 void solve(){
-  
+  cin >> n >> m;
+  for(int i = 0; i < n; i++) cin >> a[i];
+  for(int i = 0; i < n; i++) cin >> b[i];
+
+  for(int i = 0; i < n; i++){
+    for(int j = 0; j < m; j++){
+      bool flag = true;
+      for(int k = 0; k < n; k++){
+        for(int u = 0; u < m; u++){
+          if(a[k][u] != b[(i + k) % n][(j + u) % m]){
+            flag = false;
+          }
+        }
+      }
+      if(flag){
+        cout << "Yes\n";
+        return;
+      }
+    }
+  }
+  cout << "No\n";
 }
 
 signed main(){
@@ -48,7 +68,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }
