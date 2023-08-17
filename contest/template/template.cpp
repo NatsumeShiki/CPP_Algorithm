@@ -29,10 +29,10 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
+const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f3f3f3f3f, mod = 998244353;
 int n, m, k, t, q;
 int arr[M];
-vector<int> ve;
+string s, str;
 
 void solve(){
   
