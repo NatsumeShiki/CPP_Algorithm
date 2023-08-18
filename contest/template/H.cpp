@@ -5,6 +5,7 @@ using namespace std;
 #define x first
 #define y second
 #define endl "\n"
+#define all(a) a.begin(), a.end()
 #define rep(i,a,b) for(int i = int(a);i <= int(b);++i)
 #define rer(i,a,b) for(int i = int(b);i >= int(a);--i)
 #define pep(i,a,b) for(int i = int(a);i < int(b);++i)
@@ -28,10 +29,10 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f, mod = 998244353;
+const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f3f3f3f3f, mod = 998244353;
 int n, m, k, t, q;
 int arr[M];
-vector<int> alls;
+string s, str;
 
 void solve(){
   
