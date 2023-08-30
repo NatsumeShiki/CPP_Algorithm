@@ -137,4 +137,5 @@
     "[c]": {
         "files.encoding": "gbk"
     },
+    "java.format.settings.url": "eclipse-formatter.xml",
 }
