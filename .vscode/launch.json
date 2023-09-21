@@ -4,6 +4,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TV",
+            "request": "launch",
+            "mainClass": "JavaCode.TV",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "TV",
+            "request": "launch",
+            "mainClass": "java.TV",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
             "name": "HelloWorld",
             "request": "launch",
             "mainClass": "term.HelloWorld",
