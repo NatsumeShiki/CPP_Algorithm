@@ -4,6 +4,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "test1",
+            "request": "launch",
+            "mainClass": "JavaCode.test1",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
             "name": "TV",
             "request": "launch",
             "mainClass": "JavaCode.TV",
