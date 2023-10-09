@@ -4,6 +4,55 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Question1",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework4.Question1",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question2",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework2.Question2",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question1",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework2.Question1",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question3",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework1.Question3",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question2",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework1.Question2",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework1.Main",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question1",
+            "request": "launch",
+            "mainClass": "JavaCode.Homework1.Question1",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
             "name": "test1",
             "request": "launch",
             "mainClass": "JavaCode.test1",
