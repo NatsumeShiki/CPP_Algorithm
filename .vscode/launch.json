@@ -4,6 +4,34 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Lab3",
+            "request": "launch",
+            "mainClass": "JavaCode.Experiment3.Lab3",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Lab2",
+            "request": "launch",
+            "mainClass": "JavaCode.Experiment2.Lab2",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Lab1",
+            "request": "launch",
+            "mainClass": "JavaCode.Experiment1.Lab1",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
+            "name": "Question3",
+            "request": "launch",
+            "mainClass": "JavaCode.Experiment3.Question3",
+            "projectName": "Algorithm_77d1dcea"
+        },
+        {
+            "type": "java",
             "name": "Question2",
             "request": "launch",
             "mainClass": "JavaCode.Experiment3.Question2",

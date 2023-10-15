@@ -71,3 +71,8 @@ public class Question2{
     dfs(x, y, cnt + 1, dx, dy);
   }
 }
+
+// 3
+// 3 5
+// 5 3
+// 8 8

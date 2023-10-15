@@ -43,3 +43,7 @@ public class Question4{
     sc.close();
   }
 }
+// 3
+// 27
+// 50
+// 110
