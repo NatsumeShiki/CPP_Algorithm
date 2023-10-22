@@ -23,16 +23,17 @@ public class Question2{
 
 
     int[] arr = new int[]{100, 50, 10, 5, 2, 1};
-    int n = sc.nextInt();
+    int n = 9876543;
 
     int res = 0;
     for(int i = 0; i < arr.length && n > 0; i++){
       int t = n / arr[i];
+      System.out.println("需要" + arr[i] + "元" + t + "张");
       res += t;
       n -= t * arr[i];
     }
 
-    System.out.println(res);
+    System.out.println("一共需要" + res + "张");
 
     sc.close();
   }
