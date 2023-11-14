@@ -33,7 +33,7 @@ public class Question2 {
       deg = new boolean[n * 2];
       rdeg = new boolean[n * 2];
       dfs(0, 0, 0);
-      System.out.println(res);
+      System.out.println("n = " + n + "时，有" + res + "种方案");
     }
 
     sc.close();
