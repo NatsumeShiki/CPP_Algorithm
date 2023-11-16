@@ -138,8 +138,6 @@ public class Lab1{
     
     int a = x + dx;
     int b = y + dy;
-    // System.out.print(x + " " +  y + " " + a + " " + b + " ");
-    // System.out.println(x + " " + y);
     
     if(a < 0 && b < m){
       dx = 1;
@@ -161,7 +159,6 @@ public class Lab1{
       x += dx;
       y += dy;
     }
-    // System.out.println(x + " " + y);
     dfs(x, y, cnt + 1, dx, dy);
   }
 

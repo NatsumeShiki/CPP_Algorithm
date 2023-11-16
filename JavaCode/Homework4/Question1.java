@@ -53,11 +53,11 @@ public class Question1{
       }
     }
 
-    for(int i = 1; i <= n; i++){
-      for(int j = V; j >= v[i]; j--){
-        f[j] = Math.max(f[j], f[j - v[i]] + w[i]);
-      }
-    }
+    // for(int i = 1; i <= n; i++){
+    //   for(int j = V; j >= v[i]; j--){
+    //     f[j] = Math.max(f[j], f[j - v[i]] + w[i]);
+    //   }
+    // }
   }
 
   public static void dfs(int u, int capacity, int ans){
