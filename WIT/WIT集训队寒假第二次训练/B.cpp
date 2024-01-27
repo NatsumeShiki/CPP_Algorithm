@@ -30,32 +30,23 @@ struct edge{
 int lowbit(int x) { return x & -x; }
 
 const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f3f3f3f3f, mod = 998244353;
-int n, m, k, t, q, b, s;
+int n, m, k, t, q;
 int arr[M];
-// string s, str;
+string s, str;
 
 void solve(){
-  cin >> n >> k >> b >> s;
-  if(s < k * b || s > b * k + n * (k - 1)){
-    cout << -1 << endl;
-    return;
-  }
-
-  for(int i = 0; i < n; i++) arr[i] = 0;
-
-  arr[0] = b * k;
-  s -= k * b;
-  for(int i = 0; i < n; i++){
-    if(s >= k - 1) {
-      arr[i] += k - 1;
-      s -= k - 1;
+  cin >> n >> q >> s;
+    int t = 0;
+  while(q--){
+    int a, b;
+    cin >> a >> b;
+    if(a == 1){
+      t -= b;
+      if(t < 0) t += n;
     }else{
-      arr[i] += s;
-      break;
+      cout << s[(b - 1 + t) % n] << endl;
     }
   }
-
-  for(int i = 0; i < n; i++) cout << arr[i] << " \n"[i == n - 1];
 }
 
 signed main(){
@@ -68,7 +59,6 @@ signed main(){
   cout.tie(nullptr);
 
   int T = 1;
-  cin >> T;
   while(T--){
     solve();
   }
