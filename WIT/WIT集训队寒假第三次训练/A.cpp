@@ -29,13 +29,42 @@ struct edge{
 
 int lowbit(int x) { return x & -x; }
 
-const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f3f3f3f3f, mod = 998244353;
+const int N = 2e5 + 10, M = 1e6 + 10, INF = 0x3f3f3f3f3f3f3f3f, mod = 1e9 + 7;
 int n, m, k, t, q;
-int arr[M];
+int a[M], b[M], c[M];
 string s, str;
+int sz[M], fa[M];
+bool st[M];
+
+int find(int x){
+  if(x != fa[x]) fa[x] = find(fa[x]);
+  return fa[x]; 
+}
 
 void solve(){
-  
+  cin >> n;
+  for(int i = 1; i <= n; i++){
+    st[i] = false;
+    sz[i] = 0;
+    fa[i] = i;
+  }
+  for(int i = 1; i <= n; i++) cin >> a[i];
+  for(int i = 1; i <= n; i++) cin >> b[i];
+  for(int i = 1; i <= n; i++){
+    fa[find(a[i])] = find(b[i]);
+  }
+  for(int i = 1; i <= n; i++) {
+    cin >> c[i];
+    st[find(c[i])] = true;
+  }
+  for(int i = 1; i <= n; i++) sz[find(i)]++;
+
+  int res = 1;
+  for(int i = 1; i <= n; i++){
+    if(find(i) == i && (sz[i] >= 2 && !st[i]))
+      res = res * 2 % mod;
+  }
+  cout << res << endl;
 }
 
 signed main(){
